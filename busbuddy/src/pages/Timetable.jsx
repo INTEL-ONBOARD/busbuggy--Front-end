@@ -1,8 +1,7 @@
 function Timetable() {
   return (
     <div className="my-20">
-      <div className="relative container mx-auto overflow-x-auto  sm:rounded-lg ">
-        <div className="p-4 bg-transparent flex justify-center">
+              <div className="p-4 bg-transparent flex justify-center">
           <label htmlFor="table-search" className="sr-only">
             Search
           </label>
@@ -32,6 +31,13 @@ function Timetable() {
             />
           </div>
         </div>
+      <div class="grid grid-cols-2 gap-4 relative container mx-auto overflow-x-auto  sm:rounded-lg ">
+
+        
+        <div>
+
+        <div className="">
+
         <table className="w-full text-sm text-left text-gray-500 ">
           <thead className="text-xs text-gray-700 uppercase bg-white/[.3] rounded rounded-lg ">
             <tr>
@@ -130,6 +136,117 @@ function Timetable() {
           </tbody>
         </table>
       </div>
+
+        </div>
+
+        <div>
+
+        <div className="  ">
+        <table className="w-full text-sm text-left text-gray-500 ">
+          <thead className="text-xs text-gray-700 uppercase bg-white/[.3] rounded rounded-lg ">
+            <tr>
+              <th scope="col" className="p-4">
+                <div className="flex items-center">
+
+                  <label htmlFor="checkbox-all-search" className="sr-only">
+                    checkbox
+                  </label>
+                </div>
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Origin Departure
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Destination Arrival
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Route Info
+              </th>
+
+            </tr>
+          </thead>
+          <tbody >
+            {[
+              {
+                id: 1,
+                name: 'Apple MacBook Pro 17"',
+                color: "Silver",
+                category: "Laptop",
+                price: "$2999",
+              },
+              {
+                id: 2,
+                name: "Microsoft Surface Pro",
+                color: "White",
+                category: "Laptop PC",
+                price: "$1999",
+              },
+              {
+                id: 3,
+                name: "Magic Mouse 2",
+                color: "Black",
+                category: "Accessories",
+                price: "$99",
+              },
+              {
+                id: 4,
+                name: "Apple Watch",
+                color: "Silver",
+                category: "Accessories",
+                price: "$179",
+              },
+              {
+                id: 5,
+                name: "iPad",
+                color: "Gold",
+                category: "Tablet",
+                price: "$699",
+              },
+              {
+                id: 6,
+                name: 'Apple iMac 27"',
+                color: "Silver",
+                category: "PC Desktop",
+                price: "$3999",
+              },
+            ].map((item) => (
+              <tr
+                key={item.id}
+                className="bg-white/[.6] border-b  hover:bg-gray-50 "
+              >
+                <td className="w-4 p-4">
+                  <div className="flex items-center">
+
+                    <label
+                      htmlFor={`checkbox-table-search-${item.id}`}
+                      className="sr-only"
+                    >
+                      checkbox
+                    </label>
+                  </div>
+                </td>
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                >
+                  {item.name}
+                </th>
+                <td className="px-6 py-4">{item.color}</td>
+                <td className="px-6 py-4">{item.category}</td>
+
+
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+        </div>
+
+      </div>
+
+
+     
     </div>
   );
 }
