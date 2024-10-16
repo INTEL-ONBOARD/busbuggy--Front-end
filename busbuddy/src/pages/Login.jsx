@@ -14,12 +14,18 @@ function Login({ setIsAuthenticated }) {
 
   return (
     <div>
+
+      <div class="max-w-3xl mx-auto text-center mt-32 -mb-10 ">
+              <h1 class="text-3xl font-semibold text-gray-800 ">Login to Your Account</h1>
+              <p class="max-w-sm mx-auto mt-5 text-gray-500 ">Please enter your username and password to access your account. If you don't have an account, you can easily sign up!</p>
+      </div>
       <form onSubmit={handleLogin}>
-          <div class="my-10 bg-tranparent  justify-center sm:py-12">
+          <div class=" bg-tranparent  justify-center ">
             <div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md"> 
               <div class="bg-tranparent w-full rounded-lg divide-y divide-gray-200">
                 <div class="px-5 py-7">
                 <label className="font-semibold text-sm text-gray-600 pb-1 block">E-mail</label>
+                
                 <input 
                     type="text" 
                     className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" 
