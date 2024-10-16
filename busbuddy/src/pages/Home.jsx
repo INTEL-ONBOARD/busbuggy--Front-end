@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
-import dd from '../assets/dd.png';
-import emb from '../assets/emb.png';
-import sltb from '../assets/sltb.png';
+
+import phone from '../assets/mockup 1.png';
+
 
 function Home() {
   return (
     <div>
-      <div className="container px-6 py-32 my-5 mx-auto text-center">
-        <div className="max-w-lg mx-auto">
+      <div className="container px-6 py-16 mb-24  mx-auto text-center z-40  ">
+        <div className="max-w-lg mx-auto z-40">
           <h1 className="text-3xl font-semibold text-gray-800 lg:text-4xl">
             Explore, Ride, Save with <br />
             <span className="text-orange-400 font-bold">
@@ -30,29 +30,21 @@ function Home() {
         </div>
       </div>
 
-      <div className="container px-36 -mt-20 mx-auto rounded-md">
+      <div className="container px-36 -mt-32 mx-auto rounded-md ">
         <section className="bg-black/[.25] rounded-lg text-white">
-          <div className="container px-6 py-10 mx-auto">
-            <div className="xl:flex xl:items-center xl:-mx-4">
-              <div className="xl:w-1/2 xl:mx-4">
+          <div className=" px-12 mx-auto  min-h-24 ">
+            <div className="xl:flex xl:items-center xl:-mx-4 ">
+              <div className=" xl:mx-4 px-12 ">
                 <h1 className="text-2xl font-semibold text-white-800 capitalize lg:text-3xl">Our Partnerships</h1>
 
-                <p className="max-w-2xl mt-4 text-white/[.4]">
+                <p className=" mt-4 text-white/[.4]">
                   We partner with various government and public transportation agencies to provide accurate, real-time bus routes, schedules, and fare information. This collaboration ensures that your commute with Bus Buddy is always reliable and efficient.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 gap-12 mt-8 md:grid-cols-3 ml-24">
-                <div className="flex justify-center items-center">
-                  <img className="w-auto h-24" src={emb} alt="Emb Logo" />
-                </div>
-
-                <div className="flex justify-center items-center">
-                  <img className="w-auto h-12" src={sltb} alt="SLTB Logo" />
-                </div>
-
-                <div className="flex justify-center items-center">
-                  <img className="w-auto h-24" src={dd} alt="DD Logo" />
+              <div className="z-40">
+                <div className="flex justify-center items-center -mr-12">
+                  <img className="w-auto size-full -mt-32" src={phone} alt="Emb Logo" />
                 </div>
               </div>
             </div>
