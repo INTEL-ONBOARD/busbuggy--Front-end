@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import source from '../assets/source.png';
+import destination from '../assets/destination.png';
 
 function Calculator() {
   const [serviceType, setServiceType] = useState(""); // State for service type
@@ -13,26 +14,30 @@ function Calculator() {
           <div className="flex flex-col gap-4 w-72">
 
             {/*input fields*/}
-              <div className="flex ">
-                {/* Origin Input */}
-                <div>
-                  <label className="block text-white mb-1">Origin</label>
-                  <input
-                    type="text"
-                    className="w-full p-2 rounded-md border-none focus:outline-none"
-                    placeholder="Enter origin"
-                    />
-                </div>
+              <div className="flex place-items-center justify-between">
+                <img className="w-12 h-12 mr-5" src={source} alt="Source" />
+                  {/* Origin Input */}
+                  <div className="grow">
+                    <label className="block text-white mb-1">Origin</label>
+                    <input
+                      type="text"
+                      className="w-full p-2 rounded-md border-none focus:outline-none"
+                      placeholder="Enter origin"
+                      />
+                  </div>
                 </div>
 
-                {/* Destination Input */}
-                <div>
-                  <label className="block text-white mb-1">Destination</label>
-                  <input
-                    type="text"
-                    className="w-full p-2 rounded-md border-none focus:outline-none"
-                    placeholder="Enter destination"
-                    />
+                <div className= "flex place-items-center justify-between">
+                  <img className="w-8 h-8 mr-8" src={destination} alt="Destination" />
+                  {/* Destination Input */}
+                  <div className="grow">
+                    <label className="block text-white mb-1">Destination</label>
+                    <input
+                      type="text"
+                      className="w-full p-2 rounded-md border-none focus:outline-none"
+                      placeholder="Enter destination"
+                      />
+                  </div>
                 </div>
 
 
@@ -124,13 +129,19 @@ function Calculator() {
               </div>
             </div>
 
+          <div className="flex flex-col mt-5">
             {/* Calculate Fare Button */}
-            <button type="button" className="h-10 px-4 py-2 m-5 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-orange-700 focus:outline-none focus:bg-purple-600">
+            <button type="button" className="h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-orange-700 focus:outline-none">
               Calculate Fare
             </button>
+            {/* Calculate Fare Button */}
+            <button type="button" className="h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-orange-700 focus:outline-none">
+              Clear
+            </button>
+          </div>
+            
           </div>
         </div>
-
         {/* Right Section */}
         <div className=" p-6 rounded-lg    ml-4 w-1/2  flex justify-center items-center">
           <div className="text-xl">~ No Information ~</div>
