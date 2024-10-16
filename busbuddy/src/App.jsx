@@ -5,7 +5,7 @@ import Register from './pages/Register';
 import Calculator from './pages/Calculator';
 import Timetable from './pages/Timetable';
 // import DashboardHome from './pages/Dashboard/DashboardHome';
-import DashboardHome from './pages/Dashbaord/DashboardHome';
+import DashboardHome from './pages/Dashboard/DashboardHome';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';

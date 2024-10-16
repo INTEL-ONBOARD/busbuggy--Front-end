@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import logo from '../assets/logo.png'; // Import your logo
 
 function Footer() {
@@ -6,27 +7,27 @@ function Footer() {
         <footer className="bg-transparent rounded-lg m-4">
             <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
                 <div className="sm:flex sm:items-center sm:justify-between">
-                    <a href="/" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                    <Link to="/" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
                         <img src={logo} className="h-8" alt="Your Logo" /> {/* Use the imported logo */}
-                    </a>
+                    </Link>
                     <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0">
                         <li>
-                            <a href="#" className="hover:underline me-4 md:me-6">About</a>
+                            <Link to="/about" className="hover:underline mr-4 md:mr-6">About</Link>
                         </li>
                         <li>
-                            <a href="#" className="hover:underline me-4 md:me-6">Privacy Policy</a>
+                            <Link to="/privacy-policy" className="hover:underline mr-4 md:mr-6">Privacy Policy</Link>
                         </li>
                         <li>
-                            <a href="#" className="hover:underline me-4 md:me-6">Licensing</a>
+                            <Link to="/licensing" className="hover:underline mr-4 md:mr-6">Licensing</Link>
                         </li>
                         <li>
-                            <a href="#" className="hover:underline">Contact</a>
+                            <Link to="/contact" className="hover:underline">Contact</Link>
                         </li>
                     </ul>
                 </div>
                 <hr className="my-6 border-black sm:mx-auto lg:my-8" />
                 <span className="block text-sm text-gray-500 sm:text-center">
-                    © 2023 <a href="/" className="hover:underline">BusBuddy™</a>. All Rights Reserved.
+                    © 2023 <Link to="/" className="hover:underline">BusBuddy™</Link>. All Rights Reserved.
                 </span>
             </div>
         </footer>
