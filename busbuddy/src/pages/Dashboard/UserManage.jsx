@@ -335,7 +335,7 @@ function UserManage() {
 
       <label className="block text-white mb-1">Bio</label>
       <input
-        type="text"
+        type="text" 
         name="bio" 
         className="w-full p-2 rounded-md border-none focus:outline-none"
         placeholder="Enter user bio"
