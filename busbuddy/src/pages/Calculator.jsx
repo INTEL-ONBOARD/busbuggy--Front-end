@@ -104,7 +104,7 @@ function Calculator() {
             >
               Calculate Fare
             </button>
-            {/* Calculate Fare Button */}
+            {/* Clear Button */}
             <button type="button" className="h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-orange-700 focus:outline-none">
               Clear
             </button>

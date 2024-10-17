@@ -9,7 +9,7 @@ function Login({ setIsAuthenticated }) {
   const handleLogin = () => {
     // Call your API here and authenticate the user
     setIsAuthenticated(true);  // Assuming login is successful
-    navigate('/dashboard');
+    navigate('/dashboard/profile');
   };
 
   return (

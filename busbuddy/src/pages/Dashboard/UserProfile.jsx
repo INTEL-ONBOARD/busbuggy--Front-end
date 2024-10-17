@@ -74,7 +74,7 @@ const UserProfile = () => {
       </div>
 
       {/* Right Section: User Information */}
-      <div className="flex flex-col bg-white p-6 shadow-md flex-1 rounded-md">
+      <div className="flex flex-col bg-white p-6 shadow-md flex-1 rounded-md justify-between">
         <h2 className="text-lg font-bold">User Information</h2>
         <div className="mt-4">
           <p><strong>First Name: </strong>{userInfo.firstName}</p>
@@ -85,7 +85,7 @@ const UserProfile = () => {
         </div>
 
         <button
-          className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded"
+          className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded w-1/4 md:w-1/4 sm:wd-1/2 place-self-end place-items-end -mb-100"
           onClick={() => setEditInfoModalOpen(true)}
         >
           Edit Profile Information
