@@ -7,6 +7,7 @@ function Prices() {
   const [isEditPriceModelOpen, setEditPriceModalOpen] = useState(false); //state for edit price modal
 
     const [priceInfo, setPriceInfo] = useState({     // Price info state
+      id: 1,
       feeOpportunity: 1,
       currentPrice: 200.00,
       newPrice: 275.00
@@ -43,10 +44,10 @@ function Prices() {
     <>
     <div className="p-8 ml-12">
 
-    <h1 className="text-2xl font-bold mb-4">Bus Fare Amendment(Interterms)</h1>
-          <p className="text-gray-700 mb-6">
-            Average bus fare charging cycle
-          </p>
+      <h1 className="text-2xl font-bold mb-4">Bus Fare Amendment(Interterms)</h1>
+        <p className="text-gray-700 mb-6">
+          Average bus fare charging cycle
+        </p>
 
 
 
@@ -117,7 +118,10 @@ function Prices() {
               New Price
             </th>
             <th scope="col" className="px-6 py-3">
-              Action
+              Edit
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Delete
             </th>
 
           </tr>
@@ -126,19 +130,15 @@ function Prices() {
           {[
             {
               id: 1,
-              firstName: 'Nimal',
-              lastName: "De Silva",
-              email: "Nimal@email.com",
-              contact: "+94 343 3432",
-              bio: "Manager"
+              feeOpportunity: 3,
+              currentPrice: 273.88,
+              newPrice: 435.00
             },
             {
               id: 2,
-              firstName: 'Nimal',
-              lastName: "De Silva",
-              email: "Nimal@email.com",
-              contact: "+94 343 3432",
-              bio: "Manager"
+              feeOpportunity: 4,
+              currentPrice: 150.00,
+              newPrice: 300.00
             },
             {
               id: 3,
@@ -168,16 +168,16 @@ function Prices() {
               category: "PC Desktop",
               price: "$3999",
             },
-          ].map((employee) => (
+          ].map((price) => (
             <tr
-            key={employee.id}
+            key={price.id}
             className="bg-white/[.6] border-b  hover:bg-gray-50 "
             >
               <td className="w-4 p-4">
                 <div className="flex items-center">
 
                   <label
-                    htmlFor={`checkbox-table-search-${employee.id}`}
+                    htmlFor={`checkbox-table-search-${price.id}`}
                     className="sr-only"
                     >
                     checkbox
@@ -188,17 +188,19 @@ function Prices() {
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                 >
-                {employee.firstName}
+                {price.feeOpportunity}
               </th>
-              <td className="px-6 py-4">{employee.lastName}</td>
-              <td className="px-6 py-4">{employee.email}</td>
-              <td className="px-6 py-4">{employee.contact}</td>
-              <td className="px-6 py-4">{employee.bio}</td>
+              <td className="px-6 py-4">{price.currentPrice}</td>
+              <td className="px-6 py-4">{price.newPrice}</td>
               <td className="px-6 py-4">
-                <div className="flex justify-around items-center gap-6">
+                <div className="text-center">
                   <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10" 
-                     onClick={() => setEditUserModalOpen(true)}>
+                     onClick={() => setEditPriceModalOpen(true)}>
                   </i>
+                </div>
+              </td>
+              <td>
+                <div className="text-center">
                   <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"></i>
                 </div>
               </td>

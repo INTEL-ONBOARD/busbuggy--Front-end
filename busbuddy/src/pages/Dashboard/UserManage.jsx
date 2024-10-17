@@ -7,6 +7,7 @@ function UserManage() {
   const [isEditUserModelOpen, setEditUserModalOpen] = useState(false); //state for ed user modal
 
     const [userInfo, setUserInfo] = useState({     // User info state
+      id: '1',
       firstName: 'Sandy',
       lastName: 'Wilson',
       email: 'sandy@gmail.com',
@@ -121,7 +122,10 @@ function UserManage() {
               Bio
             </th>
             <th scope="col" className="px-6 py-3">
-              Action
+              Edit
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Delete
             </th>
 
           </tr>
@@ -199,10 +203,14 @@ function UserManage() {
               <td className="px-6 py-4">{employee.contact}</td>
               <td className="px-6 py-4">{employee.bio}</td>
               <td className="px-6 py-4">
-                <div className="flex justify-around items-center gap-6">
+                <div className="text-center">
                   <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10" 
                      onClick={() => setEditUserModalOpen(true)}>
                   </i>
+                </div>
+              </td>
+              <td>
+                <div className="text-center">
                   <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"></i>
                 </div>
               </td>
