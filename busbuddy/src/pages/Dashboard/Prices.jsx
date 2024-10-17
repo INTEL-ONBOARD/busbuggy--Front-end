@@ -208,9 +208,10 @@ function Prices() {
         </tbody>
     </table>
     </div>
-
-
   </div>
+
+
+  
       {/*add price modal*/}
       <Modal 
       isOpen={isAddPriceModelOpen}
