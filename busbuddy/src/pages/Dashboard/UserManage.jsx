@@ -79,16 +79,16 @@ function UserManage() {
                 />
             </div>
       </div>
-<div className="flex flex-row justify-center items-center"> {/* Add User Button */}
-  <button 
-    type="button" 
-    className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-    onClick={() => setAddUserModalOpen(true)}
-  >
-    <i className="fi fi-rs-user-add mr-6"></i>
-    Add User
-  </button>
-</div>
+      <div className="flex flex-row justify-center items-center"> {/* Add User Button */}
+        <button 
+          type="button" 
+          className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+          onClick={() => setAddUserModalOpen(true)}
+        >
+          <i className="fi fi-rs-user-add mr-6"></i>
+          Add User
+        </button>
+      </div>
     </div>
 
 
@@ -175,7 +175,7 @@ function UserManage() {
           ].map((employee) => (
             <tr
             key={employee.id}
-            className="bg-white/[.6] border-b  hover:bg-gray-50 "
+            className="bg-white/[.6] border-b  hover:bg-gray-50"
             >
               <td className="w-4 p-4">
                 <div className="flex items-center">
