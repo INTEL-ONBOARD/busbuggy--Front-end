@@ -218,7 +218,7 @@ function UserManage() {
       isOpen={isAddUserModelOpen}
       onRequestClose={() => setAddUserModalOpen(false)}
       contentLabel="Add New User"
-      className="flex shadow-md rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
+      className="flex  rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
     >
     <h2 className="text-xl font-semibold m-6">Add New User</h2>
     <div className="bg-black/[.40] p-8 w-1/3 rounded-md">
@@ -284,78 +284,87 @@ function UserManage() {
 
 
     {/*Edit user modal*/}
-    <Modal 
-      isOpen={isEditUserModelOpen}
-      onRequestClose={() => setEditUserModalOpen(false)}
-      contentLabel="Add New User"
-      className="flex shadow-md rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
-    >
-    <h2 className="text-xl font-semibold m-6">Edit User</h2>
-    <div className="bg-black/[.40] p-8 w-1/3 rounded-md">
-      <form action="">
+<Modal 
+  isOpen={isEditUserModelOpen}
+  onRequestClose={() => setEditUserModalOpen(false)}
+  contentLabel="Add New User"
+  className="flex rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
+>
+  <h2 className="text-xl font-semibold m-6">Edit User</h2>
+  <div className="bg-black/[.40] p-8 w-1/3 rounded-md">
+    <form action="">
       <label className="block text-white mb-1">First Name</label>
-          <input
-            type="text"
-            className="w-full p-2 rounded-md border-none focus:outline-none"
-            placeholder="Enter first name"
-            value={userInfo.firstName}
-            onChange={handleInputChange}
-            />
-          <label className="block text-white mb-1">Last Name</label>
-          <input
-            type="text"
-            className="w-full p-2 rounded-md border-none focus:outline-none"
-            placeholder="Enter last name"
-            value={userInfo.lastName}
-            onChange={handleInputChange}
-            />
-          <label className="block text-white mb-1">Email</label>
-          <input
-            type="email"
-            className="w-full p-2 rounded-md border-none focus:outline-none"
-            placeholder="Enter email address"
-            value={userInfo.email}
-            onChange={handleInputChange}
-            />
-          <label className="block text-white mb-1">contact</label>
-          <input
-            type="text"
-            className="w-full p-2 rounded-md border-none focus:outline-none"
-            placeholder="Enter user contact"
-            value={userInfo.contact}
-            onChange={handleInputChange}
-            />
-          <label className="block text-white mb-1">Bio</label>
-          <input
-            type="text"
-            className="w-full p-2 rounded-md border-none focus:outline-none"
-            placeholder="Enter user bio"
-            value={userInfo.bio}
-            onChange={handleInputChange}
-            />
+      <input
+        type="text"
+        name="firstName"  
+        className="w-full p-2 rounded-md border-none focus:outline-none"
+        placeholder="Enter first name"
+        value={userInfo.firstName}
+        onChange={handleInputChange}
+      />
 
-            <div className="flex flex-row text-center m-6">
-            <button 
-              type="button" 
-              className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-              onClick={handleCreateInfo}
-              >
-                <i className="fi fi-rs-user-add mr-6"></i>
-                Add User
-          </button>
-          <button 
-              type="button" 
-              className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
-              onClick={handleClearInfo}
-              >
-                <i className="fi fi-rs-user-add mr-6"></i>
-                Clear All
-          </button>
+      <label className="block text-white mb-1">Last Name</label>
+      <input
+        type="text"
+        name="lastName"  
+        className="w-full p-2 rounded-md border-none focus:outline-none"
+        placeholder="Enter last name"
+        value={userInfo.lastName}
+        onChange={handleInputChange}
+      />
 
-            </div>
-      </form>
-    </div>
-    </Modal>
+      <label className="block text-white mb-1">Email</label>
+      <input
+        type="email"
+        name="email"  
+        className="w-full p-2 rounded-md border-none focus:outline-none"
+        placeholder="Enter email address"
+        value={userInfo.email}
+        onChange={handleInputChange}
+      />
+
+      <label className="block text-white mb-1">Contact</label>
+      <input
+        type="text"
+        name="contact"  
+        className="w-full p-2 rounded-md border-none focus:outline-none"
+        placeholder="Enter user contact"
+        value={userInfo.contact}
+        onChange={handleInputChange}
+      />
+
+      <label className="block text-white mb-1">Bio</label>
+      <input
+        type="text"
+        name="bio" 
+        className="w-full p-2 rounded-md border-none focus:outline-none"
+        placeholder="Enter user bio"
+        value={userInfo.bio}
+        onChange={handleInputChange}
+      />
+
+      <div className="flex flex-row text-center m-6">
+        <button 
+          type="button" 
+          className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+          onClick={handleCreateInfo}
+        >
+          <i className="fi fi-rs-user-add mr-6"></i>
+          Add User
+        </button>
+        <button 
+          type="button" 
+          className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
+          onClick={handleClearInfo}
+        >
+          <i className="fi fi-rs-user-add mr-6"></i>
+          Clear All
+        </button>
+      </div>
+    </form>
+  </div>
+</Modal>
+
 
 
       </>
