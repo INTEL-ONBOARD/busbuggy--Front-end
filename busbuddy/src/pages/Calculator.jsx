@@ -13,9 +13,9 @@ function Calculator() {
   return (
     <div>
 
-      <div className="flex justify-evenly items-center my-32 ">
+      <div className="flex justify-center content-start mt-20 ">
         {/* Left Section */}
-        <div className=" p-10 rounded-lg  bg-black/[.40] ">
+        <div className=" p-10 rounded-lg  bg-black/[.40] mr-5 ">
           <div className="flex flex-col gap-4 w-72">
 
             {/*input fields*/}
@@ -115,10 +115,10 @@ function Calculator() {
 
 
         {/* Right Section */}
-        <div className="p-6rounded-md flex justify-center items-center">
+        <div className="p-6rounded-md flex justify-start content-start">
           {/*conditional rendering for calculated fare information after data loading and calculated button evt*/}
           {isFareLoaded && 
-          <div className="text-gray-100 p-10 rounded-lg  bg-black/[.40] ">
+          <div className="text-gray-100 p-10 rounded-lg  bg-black/[.20] min-h-1">
 
             <form className="grid grid-cols-2 gap-4 h-80 min-h-full">
               <div className="font-semibold text-xl">Origin:</div>
@@ -139,7 +139,14 @@ function Calculator() {
 
             
           </div>}
-          {!isFareLoaded && <div>Something went wrong</div>}
+
+          {!isFareLoaded && 
+          <div>          
+            <div className="text-gray-100 p-10 rounded-lg  bg-black/[.20] min-h-1">
+              <h3>Something went wrong!</h3>
+            </div>
+          </div>}
+
         </div>
       </div>
     </div>
