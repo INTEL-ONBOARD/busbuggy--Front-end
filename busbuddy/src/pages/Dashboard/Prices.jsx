@@ -211,7 +211,7 @@ function Prices() {
   </div>
 
 
-  
+
       {/*add price modal*/}
       <Modal 
       isOpen={isAddPriceModelOpen}

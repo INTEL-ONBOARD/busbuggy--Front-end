@@ -11,14 +11,21 @@ const RoutesSection = () => {
   const [isEditRouteModalOpen, setEditRouteModalOpen] = useState(false); //state for route list edit modal(opens from route list section's edit)
   
   //for route description page
-  const [isRouteDescSectionOpen, setRouteDescSectionOpen] = useState(false); //state for route description section table(opens from route list section's view)
-  const [isAddRouteDescModalOpen, setAddRouteDescModalOpen] = useState(false); //state for route description section table(opens from  route description section's edit)
-  const [isEditRouteDescModalOpen, setEditRouteDescModalOpen] = useState(false); //state for route description edit table(opens from  route description section's edit)
+  const [isFareStageSectionOpen, setFareStageSectionOpen] = useState(false); //state for route description section table(opens from route list section's view)
+  const [isAddFareStageModalOpen, setAddFareStageModalOpen] = useState(false); //state for route description section table(opens from  route description section's edit)
+  const [isEditFareStageModalOpen, setEditFareStageModalOpen] = useState(false); //state for route description edit table(opens from  route description section's edit)
 
   const [routeInfo, setRouteInfo] = useState({     // Price info state
     id: 10,
     routeNo: 100,
     description: "Colombo-Kandy-Express"
+  });
+
+  const [fareStageInfo, setFareStageInfo] = useState({     // Price info state
+    id: 2,
+    fareStage: 20,
+    price: 300.00,
+    city: "Kandy",
   });
 
   // Handler for edit route input form changes
@@ -45,15 +52,39 @@ const RoutesSection = () => {
     });
   };
 
+  // Handler for edit fare stage input form changes
+  const handleFareStageInputChange = (e) => {
+    const { name, value} = e.target;
+    setFareStageInfo({ ...fareStageInfo, [name]: value });
+  };
+
+  const handleCreateFareStageInfo = () => {         // Handler to save created info
+    console.log('Created new fare stage info:', fareStageInfo);
+    setAddFareStageModalOpen(false); // Close modal after creation
+  };
+
+  const handleFareStageUpdateInfo = () => {         // Handler to save updated info
+    console.log('Updated new fare stage info:', fareStageInfo);
+    setEditFareStageModalOpen(false); // Close modal after update
+  };
+
+  const handleClearFareStageInfo = () => {        // Handler to clear fare stage input form
+    console.log("textboxes should be cleared");
+    setFareStageInfo({
+      fareStage: 0,
+      price: 0.00,
+      city: ""
+    });
+  };
 
 
 
   return (
     <>
 
-    {isRouteDescSectionOpen ? 
+    {isFareStageSectionOpen ? 
     (
-      <div className="p-8 ml-12">
+      <div className="p-8 ml-12">{/*Route description rendering*/}
 
       <h1 className="text-2xl font-bold">Colombo-Kandy-Express(001)</h1>
 
@@ -84,7 +115,7 @@ const RoutesSection = () => {
               type="text"
               id="table-search"
               className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-              placeholder="Search for items"
+              placeholder="Search for opportunities"
               />
           </div>
     </div>
@@ -92,10 +123,10 @@ const RoutesSection = () => {
       <button 
         type="button" 
         className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-        onClick={() => setAddPriceModalOpen(true)}
+        onClick={() => setAddFareStageModalOpen(true)} //opens add modal for route description
         >
         <i className="fi fi-rs-price-add mr-6"></i>
-        Add Price
+        Add Fare Stage
       </button>
     </div>
   </div>
@@ -115,18 +146,18 @@ const RoutesSection = () => {
               </div>
             </th>
             <th scope="col" className="px-6 py-3">
-              Fee Opportunity
+              Fare Stage
             </th>
             <th scope="col" className="px-6 py-3">
-              Current Price
+              City
             </th>
             <th scope="col" className="px-6 py-3">
-              New Price
+              Price
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 w-6">
               Edit
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 w-6">
               Delete
             </th>
 
@@ -136,15 +167,15 @@ const RoutesSection = () => {
           {[
             {
               id: 1,
-              feeOpportunity: 3,
-              currentPrice: 273.88,
-              newPrice: 435.00
+              fareStage: 3,
+              city: "Pilimathalawa",
+              price: 435.00
             },
             {
               id: 2,
-              feeOpportunity: 4,
-              currentPrice: 150.00,
-              newPrice: 300.00
+              fareStage: 4,
+              city: "Kandy",
+              price: 810.00
             },
             {
               id: 3,
@@ -174,16 +205,16 @@ const RoutesSection = () => {
               category: "PC Desktop",
               price: "$3999",
             },
-          ].map((price) => (
+          ].map((fareStage) => (
             <tr
-            key={price.id}
+            key={fareStage.id}
             className="bg-white/[.6] border-b  hover:bg-gray-50 "
             >
               <td className="w-4 p-4">
                 <div className="flex items-center">
 
                   <label
-                    htmlFor={`checkbox-table-search-${price.id}`}
+                    htmlFor={`checkbox-table-search-${fareStage.id}`}
                     className="sr-only"
                     >
                     checkbox
@@ -194,14 +225,14 @@ const RoutesSection = () => {
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                 >
-                {price.feeOpportunity}
+                {fareStage.fareStage}
               </th>
-              <td className="px-6 py-4">{price.currentPrice}</td>
-              <td className="px-6 py-4">{price.newPrice}</td>
+              <td className="px-6 py-4">{fareStage.city}</td>
+              <td className="px-6 py-4">{fareStage.price}</td>
               <td className="px-6 py-4">
                 <div className="text-center">
                   <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10" 
-                     onClick={() => setEditPriceModalOpen(true)}>
+                     onClick={() => setEditFareStageModalOpen(true)}>
                   </i>
                 </div>
               </td>
@@ -216,12 +247,23 @@ const RoutesSection = () => {
         </tbody>
     </table>
     </div>
+
+    <div className="text-center col-span-2">
+      <button 
+          type="button" 
+          className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+          onClick={() => {setFareStageSectionOpen(false); setRouteModalOpen(true);}}
+          >
+          Back to Routes
+      </button>
+    </div>
+
   </div>
     
     
     ) : (
 
-<div className="p-8 ml-12">       {/*Route list*/}
+<div className="p-8 ml-12">       {/*Route list section rendering*/}
     <div className="flex flex-row justify-around">
     <div className="p-4 bg-transparent flex justify-center"> {/*searchbar*/}
           <label htmlFor="table-search" className="sr-only">
@@ -365,7 +407,7 @@ const RoutesSection = () => {
               <td className="px-6 py-4">
                 <div className="text-center">
                   <i className="fi fi-rs-eye hover:text-orange-600 hover:font-bold hover:rounded-full w-10" 
-                     onClick={() => setRouteDescSectionOpen(true)}>
+                     onClick={() => setFareStageSectionOpen(true)}>
                   </i>
                 </div>
               </td>
@@ -413,7 +455,7 @@ const RoutesSection = () => {
           <label className="block text-white mb-1">Previous Price</label>
           <input
             type="text"
-            name="currentPrice"
+            name="description"
             className="w-full p-2 rounded-md border-none focus:outline-none"
             placeholder="Enter route description"
             onChange={handleRouteInputChange}
@@ -490,6 +532,124 @@ const RoutesSection = () => {
         </form>
       </div>
     </Modal>
+
+    
+      {/*add fare stage modal*/}
+      <Modal 
+      isOpen={isAddFareStageModalOpen}
+      onRequestClose={() => setAddFareStageModalOpen(false)}
+      contentLabel="Add New Fare Stage for Colomob-Kandy-Express"
+      className="flex rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
+    >
+    <h2 className="text-xl font-semibold m-6">Add New Fare Stage</h2>
+    <div className="bg-black/[.40] p-8 w-1/3 rounded-md">
+      <form action="">
+      <label className="block text-white mb-1">Fare Stage No</label>
+          <input
+            type="text"
+            name="fareStage"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter fare stage No"
+            onChange={handleFareStageInputChange}
+            />
+          <label className="block text-white mb-1">Stage Price</label>
+          <input
+            type="text"
+            name="price"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter stage price"
+            onChange={handleFareStageInputChange}
+            />
+          <label className="block text-white mb-1">Stage City</label>
+          <input
+            type="text"
+            name="city"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter stage city"
+            onChange={handleFareStageInputChange}
+            />
+            <div className="flex flex-row text-center m-6">
+            <button 
+              type="button" 
+              className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+              onClick={handleCreateFareStageInfo}
+              >
+                {/*<i className="fi fi-rs-user-add mr-6"></i>*/}
+                Add Fare Stage
+          </button>
+          <button 
+              type="button" 
+              className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
+              onClick={handleClearFareStageInfo}
+              >
+                Clear All
+          </button>
+            </div>
+      </form>
+    </div>
+    </Modal>
+
+     {/*edit fare stage modal*/}
+  <Modal 
+    isOpen={isEditFareStageModalOpen}
+    onRequestClose={() => setEditFareStageModalOpen(false)}
+    contentLabel="Edit Fare Stage for Colombo-Kandy-Express"
+    className="flex rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
+  >
+    <h2 className="text-xl font-semibold m-6">Edit Fare Stage for Colombo-Kandy-Express</h2>
+    <div className="bg-black/[.40] p-8 w-1/3 rounded-md">
+      <form action="">
+        <label className="block text-white mb-1">Fare Stage</label>
+        <input
+          type="text"
+          name="fareStage"  
+          className="w-full p-2 rounded-md border-none focus:outline-none"
+          placeholder="Enter fare stage"
+          value={fareStageInfo.fareStage}
+          onChange={handleFareStageInputChange}
+        />
+
+        <label className="block text-white mb-1">Stage City</label>
+        <input
+          type="text"
+          name="city"  
+          className="w-full p-2 rounded-md border-none focus:outline-none"
+          placeholder="Enter current name"
+          value={fareStageInfo.city}
+          onChange={handleFareStageInputChange}
+        />
+
+        <label className="block text-white mb-1">Stage price</label>
+        <input
+          type="text"
+          name="price"  
+          className="w-full p-2 rounded-md border-none focus:outline-none"
+          placeholder="Enter new price"
+          value={fareStageInfo.price}
+          onChange={handleFareStageInputChange}
+        />
+
+        <div className="flex flex-row text-center m-6">
+          <button 
+            type="button" 
+            className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+            onClick={handleFareStageUpdateInfo}
+          >
+            <i className="fi fi-rs-user-add mr-6"></i>
+            Edit Price
+          </button>
+          <button 
+            type="button" 
+            className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
+            onClick={handleClearFareStageInfo}
+          >
+            <i className="fi fi-rs-user-add mr-6"></i>
+            Clear All
+          </button>
+        </div>
+      </form>
+    </div>
+  </Modal>
     
     </>
   );
