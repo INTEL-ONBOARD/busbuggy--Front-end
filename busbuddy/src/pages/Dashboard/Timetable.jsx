@@ -1,7 +1,10 @@
+import { useState } from "react";
+import Modal from 'react-modal';
+
 function TimeTable() {
 
 
-  const [isViewTimetableModelOpen, setViewTimetableModalOpen] = useState(false); //state for view timetable modal
+  const [isViewTimetableModalOpen, setViewTimetableModalOpen] = useState(false); //state for view timetable modal
 
 
 
@@ -146,7 +149,8 @@ function TimeTable() {
                   <td className="px-6 py-4">
                   <div className="text-center">
                     <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10" 
-                      onClick={() => setEditUserModalOpen(true)}>
+                  
+                  >
                     </i>
                   </div>
                 </td>
@@ -268,7 +272,8 @@ function TimeTable() {
                 <td className="px-6 py-4">
                 <div className="text-center">
                   <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10" 
-                     onClick={() => setEditUserModalOpen(true)}>
+
+                     >
                   </i>
                 </div>
                 </td>
@@ -284,7 +289,16 @@ function TimeTable() {
           </tbody>
         </table>
       </div>
+      </div>
 
+      <div className="text-center col-span-2">
+      <button 
+          type="button" 
+          className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+          //onClick={() => setViewTimetableModalOpen(false)}
+          >
+          Back to List
+        </button>
       </div>
 
       </div>
@@ -298,7 +312,7 @@ function TimeTable() {
 
   {/*for viewing timetables for each number*/}
   <Modal 
-  isOpen={isEditPriceModelOpen}
+  isOpen={isViewTimetableModalOpen}
   onRequestClose={() => setEditPriceModalOpen(false)}
   contentLabel="Add New Price Opportunity"
   className="flex rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"

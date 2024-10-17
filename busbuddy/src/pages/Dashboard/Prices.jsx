@@ -13,13 +13,11 @@ function Prices() {
       newPrice: 275.00
     });
 
-
   // Handler for price info form changes
   const handleInputChange = (e) => {
     const { name, value} = e.target;
     setPriceInfo({ ...priceInfo, [name]: value });
   };
-
 
     const handleCreateInfo = () => {         // Handler to save created info
       console.log('Created new price info:', priceInfo);
@@ -33,7 +31,7 @@ function Prices() {
 
     const handleClearInfo = () => {        // Handler to clear price info form
       setPriceInfo({
-        feeOpportunity: 1,
+        feeOpportunity: 0,
         currentPrice: 0.00,
         newPrice: 0.00
       });
@@ -253,7 +251,7 @@ function Prices() {
               className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
               onClick={handleCreateInfo}
               >
-                <i className="fi fi-rs-user-add mr-6"></i>
+                {/*<i className="fi fi-rs-user-add mr-6"></i>*/}
                 Add Price
           </button>
           <button 
@@ -261,7 +259,6 @@ function Prices() {
               className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
               onClick={handleClearInfo}
               >
-                <i className="fi fi-rs-user-add mr-6"></i>
                 Clear All
           </button>
             </div>
@@ -270,7 +267,7 @@ function Prices() {
     </Modal>
 
 
-
+ {/*edit price modal*/}
 <Modal 
   isOpen={isEditPriceModelOpen}
   onRequestClose={() => setEditPriceModalOpen(false)}
@@ -314,7 +311,7 @@ function Prices() {
         <button 
           type="button" 
           className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-          onClick={handleCreateInfo}
+          onClick={handleUpdateInfo}
         >
           <i className="fi fi-rs-user-add mr-6"></i>
           Edit Price
