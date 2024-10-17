@@ -3,7 +3,8 @@ import Modal from 'react-modal';
 
 function UserManage() {
 
-  const [isEditUserModalOpen, setAddUserModalOpen] = useState(false); //state for edit user popup
+  const [isAddUserModelOpen, setAddUserModalOpen] = useState(false); //state for add user modal
+  const [isEditUserModelOpen, setEditUserModalOpen] = useState(false); //state for ed user modal
 
     const [userInfo, setUserInfo] = useState({     // User info state
       firstName: 'Sandy',
@@ -13,14 +14,26 @@ function UserManage() {
       bio: 'Team Manager'
     });
 
-    const handleInputChange = (e) => {     // Handler for user info form changes
-      const { name, value } = e.target;
-      setUserInfo({ ...userInfo, [name]: value });
+
+
+
+  // Handler for user info form changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserInfo({ ...userInfo, [name]: value });
+  };
+
+
+
+  
+    const handleCreateInfo = () => {         // Handler to save created info
+      console.log('Created new user info:', userInfo);
+      setAddUserModalOpen(false); // Close modal after creation
     };
 
-    const handleSaveInfo = () => {         // Handler to save updated info
-      console.log('Created new user info:', userInfo);
-      setAddUserModalOpen(false); // Close modal after save
+    const handleUpdateInfo = () => {         // Handler to save updated info
+      console.log('Updated new user info:', userInfo);
+      setEditUserModalOpen(false); // Close modal after update
     };
 
     const handleClearInfo = () => {        // Handler to clear user info form
@@ -28,7 +41,7 @@ function UserManage() {
         firstName: '',
         lastName: '',
         email: '',
-        phone: '',
+        contact: '',
         bio: ''
       });
     };
@@ -124,7 +137,7 @@ function UserManage() {
               bio: "Manager"
             },
             {
-              id: 1,
+              id: 2,
               firstName: 'Nimal',
               lastName: "De Silva",
               email: "Nimal@email.com",
@@ -187,7 +200,9 @@ function UserManage() {
               <td className="px-6 py-4">{employee.bio}</td>
               <td className="px-6 py-4">
                 <div className="flex justify-around items-center gap-6">
-                  <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10"></i>
+                  <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10" 
+                     onClick={() => setEditUserModalOpen(true)}>
+                  </i>
                   <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"></i>
                 </div>
               </td>
@@ -198,9 +213,9 @@ function UserManage() {
     </table>
     </div>
 
-    {/*Edit/add user modal*/}
+    {/*add user modal*/}
     <Modal 
-      isOpen={isEditUserModalOpen}
+      isOpen={isAddUserModelOpen}
       onRequestClose={() => setAddUserModalOpen(false)}
       contentLabel="Add New User"
       className="flex shadow-md rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
@@ -229,7 +244,7 @@ function UserManage() {
             placeholder="Enter first name"
             onChange={handleInputChange}
             />
-          <label className="block text-white mb-1">Phone</label>
+          <label className="block text-white mb-1">contact</label>
           <input
             type="text"
             className="w-full p-2 rounded-md border-none focus:outline-none"
@@ -248,7 +263,82 @@ function UserManage() {
             <button 
               type="button" 
               className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-              onClick={handleSaveInfo}
+              onClick={handleCreateInfo}
+              >
+                <i className="fi fi-rs-user-add mr-6"></i>
+                Add User
+          </button>
+          <button 
+              type="button" 
+              className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
+              onClick={handleClearInfo}
+              >
+                <i className="fi fi-rs-user-add mr-6"></i>
+                Clear All
+          </button>
+
+            </div>
+      </form>
+    </div>
+    </Modal>
+
+
+    {/*Edit user modal*/}
+    <Modal 
+      isOpen={isEditUserModelOpen}
+      onRequestClose={() => setEditUserModalOpen(false)}
+      contentLabel="Add New User"
+      className="flex shadow-md rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
+    >
+    <h2 className="text-xl font-semibold m-6">Edit User</h2>
+    <div className="bg-black/[.40] p-8 w-1/3 rounded-md">
+      <form action="">
+      <label className="block text-white mb-1">First Name</label>
+          <input
+            type="text"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter first name"
+            value={userInfo.firstName}
+            onChange={handleInputChange}
+            />
+          <label className="block text-white mb-1">Last Name</label>
+          <input
+            type="text"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter last name"
+            value={userInfo.lastName}
+            onChange={handleInputChange}
+            />
+          <label className="block text-white mb-1">Email</label>
+          <input
+            type="email"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter email address"
+            value={userInfo.email}
+            onChange={handleInputChange}
+            />
+          <label className="block text-white mb-1">contact</label>
+          <input
+            type="text"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter user contact"
+            value={userInfo.contact}
+            onChange={handleInputChange}
+            />
+          <label className="block text-white mb-1">Bio</label>
+          <input
+            type="text"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter user bio"
+            value={userInfo.bio}
+            onChange={handleInputChange}
+            />
+
+            <div className="flex flex-row text-center m-6">
+            <button 
+              type="button" 
+              className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+              onClick={handleCreateInfo}
               >
                 <i className="fi fi-rs-user-add mr-6"></i>
                 Add User

@@ -51,7 +51,7 @@ const UserProfile = () => {
   return (
     <div className="p-10 flex space-x-10 ">
       {/* Left Section: Profile Picture and Buttons */}
-      <div className="flex flex-col items-center bg-white p-6 shadow-md corner rounded-md">
+      <div className="flex flex-col items-center bg-white/[.35] p-6 shadow-md corner rounded-md">
         <img
           src={profilePic || "https://via.placeholder.com/150"}
           alt="Profile"
@@ -74,7 +74,7 @@ const UserProfile = () => {
       </div>
 
       {/* Right Section: User Information */}
-      <div className="flex flex-col bg-white p-6 shadow-md flex-1 rounded-md justify-between">
+      <div className="flex flex-col bg-white/[.35] p-6 shadow-md flex-1 rounded-md justify-between">
         <h2 className="text-lg font-bold">User Information</h2>
         <div className="mt-4">
           <p><strong>First Name: </strong>{userInfo.firstName}</p>
