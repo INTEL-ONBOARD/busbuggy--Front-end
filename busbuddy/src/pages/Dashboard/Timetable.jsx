@@ -5,7 +5,7 @@ function TimeTable() {
 
   const [isTimetableSectionOpen, setTimetableSectionOpen] = useState(false); // state for view timetable section
 
-  const [isAddTurnForCity1ModalOpen, setAddTurnForCity1ModelOpen] = useState(false); //state for add turn for city table's modal
+  const [isAddTurnForCity1ModalOpen, setAddTurnForCity1ModalOpen] = useState(false); //state for add turn for city table's modal
   const [isEditTurnForCity1ModalOpen, setEditTurnForCity1ModalOpen] = useState(false); //state for edit turn for city1 table'smodal
 
   const [isAddTurnForCity2ModalOpen, setAddTurnForCity2ModalOpen] = useState(false); //state for add turn for city2 table'smodal
@@ -34,7 +34,7 @@ function TimeTable() {
   
   const handleCreateTurnForCity1Info = () => {         // Handler to save created info for add turn for city one
     console.log('Created new turn info for city1 table:', turnForCity1Info);
-    setAddTurnForCity1ModelOpen(false); // Close modal after creation
+    setAddTurnForCity1ModalOpen(false); // Close modal after creation
   };
 
   const handleUpdateTurnForCity1Info = () => {         // Handler to save updated info
@@ -51,6 +51,33 @@ function TimeTable() {
       arrivalTime: "-"
     });
   };
+
+    // Handler for turn for city 1 info form changes
+    const handleTurnForCity2InputChange = (e) => {
+      const { name, value} = e.target;
+      console.log("is working");
+      setTurnForCity2Info({ ...turnForCity2Info, [name]: value });
+    };
+    
+    const handleCreateTurnForCity2Info = () => {         // Handler to save created info for add turn for city two
+      console.log('Created new turn info for city2 table:', turnForCity2Info);
+      setAddTurnForCity2ModalOpen(false); // Close modal after creation
+    };
+  
+    const handleUpdateTurnForCity2Info = () => {         // Handler to save updated info
+      console.log('Updated turn for city 2 info:', turnForCity2Info);
+      setEditTurnForCity2ModalOpen(false); // Close modal after update
+    };
+  
+    const handleTurnForCity2ClearInfo = () => {        // Handler to clear (add & edit) turn for city one table info form
+      console.log("clear handle event triggered");
+      setTurnForCity2Info({
+        id: 0,
+        turnNo: 0,
+        departureTime: "-",
+        arrivalTime: "-"
+      });
+    };
 
   return (
     <>
@@ -98,7 +125,7 @@ function TimeTable() {
               <button 
                 type="button" 
                 className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-                onClick={() => setAddTurnForCity1ModelOpen(true)} //opens add modal for route description
+                onClick={() => setAddTurnForCity1ModalOpen(true)} //opens add modal for route description
                 >
                 <i className="fi fi-rs-price-add mr-6"></i>
                 Add Turn for city o1
@@ -271,7 +298,8 @@ function TimeTable() {
                         <td className="px-6 py-4">{city2.departureTime}</td>
                         <td className="px-6 py-4">
                           <div className="text-center">
-                            <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10"></i>
+                            <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10"
+                            onClick={() => setEditTurnForCity2ModalOpen(true)}></i>
                           </div>
                         </td>
                         <td>
@@ -473,10 +501,10 @@ function TimeTable() {
   </div>
     )}
 
-      {/*add turn for city 01 table*/}
+      {/*add turn for city 01 table modal*/}
       <Modal 
       isOpen={isAddTurnForCity1ModalOpen}
-      onRequestClose={() => setAddTurnForCity1ModelOpen(false)}
+      onRequestClose={() => setAddTurnForCity1ModalOpen(false)}
       contentLabel="Add New Turn"
       className="flex  rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
     >
@@ -528,7 +556,7 @@ function TimeTable() {
     </div>
     </Modal>
 
-     {/*edit turn for city 1 modal*/}
+     {/*edit turn for city 1 table modal*/}
     <Modal 
       isOpen={isEditTurnForCity1ModalOpen}
       onRequestClose={() => setEditTurnForCity1ModalOpen(false)}
@@ -581,6 +609,125 @@ function TimeTable() {
               type="button" 
               className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
               onClick={handleTurnForCity1ClearInfo}
+            >
+              <i className="fi fi-rs-user-add mr-6"></i>
+              Clear All
+            </button>
+          </div>
+        </form>
+      </div>
+    </Modal>
+
+
+    
+      {/*add turn for city 01 table modal*/}
+      <Modal 
+      isOpen={isAddTurnForCity2ModalOpen}
+      onRequestClose={() => setAddTurnForCity2ModalOpen(false)}
+      contentLabel="Add New Turn"
+      className="flex  rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
+    >
+    <h2 className="text-xl font-semibold m-6">Add New Turn</h2>
+    <div className="bg-black/[.40] p-8 w-1/3 rounded-md">
+      <form action="">
+      <label className="block text-white mb-1">Turn Number</label>
+          <input
+            type="text"
+            name="turnNo"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter turn number"
+            onChange={handleTurnForCity2InputChange}
+            />
+          <label className="block text-white mb-1">Arrival Time</label>
+          <input
+            type="text"
+            name="arrivalTime"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter arrival time"
+            onChange={handleTurnForCity2InputChange}
+            />
+          <label className="block text-white mb-1">Departure Time</label>
+          <input
+            type="text"
+            name="departureTime"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter departure time"
+            onChange={handleTurnForCity2InputChange}
+            />
+            <div className="flex flex-row text-center m-6">
+            <button 
+              type="button" 
+              className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+              onClick={handleCreateTurnForCity2Info}
+              >
+                {/*<i className="fi fi-rs-user-add mr-6"></i>*/}
+                Add Turn
+          </button>
+          <button 
+              type="button" 
+              className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
+              onClick={handleTurnForCity2ClearInfo}
+              >
+                Clear All
+          </button>
+            </div>
+      </form>
+    </div>
+    </Modal>
+
+         {/*edit turn for city 2 table modal*/}
+         <Modal 
+      isOpen={isEditTurnForCity2ModalOpen}
+      onRequestClose={() => setEditTurnForCity2ModalOpen(false)}
+      contentLabel="Edit Turn"
+      className="flex rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
+    >
+      <h2 className="text-xl font-semibold m-6">Edit Turn</h2>
+      <div className="bg-black/[.40] p-8 w-1/3 rounded-md">
+        <form action="">
+          <label className="block text-white mb-1">Turn Number</label>
+          <input
+            type="text"
+            name="turnNo"  
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter turn number"
+            value={turnForCity2Info.turnNo}
+            onChange={handleTurnForCity2InputChange}
+          />
+
+          <label className="block text-white mb-1">Arrival Time</label>
+          <input
+            type="text"
+            name="arrivalTime"  
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter arrival time"
+            value={turnForCity2Info.arrivalTime}
+            onChange={handleTurnForCity2InputChange}
+          />
+
+          <label className="block text-white mb-1">Departure Time</label>
+          <input
+            type="text"
+            name="departureTime"
+            className="w-full p-2 rounded-md border-none focus:outline-none"
+            placeholder="Enter departure time"
+            value={turnForCity2Info.departureTime}
+            onChange={handleTurnForCity2InputChange}
+          />
+          {/*buttons */}
+          <div className="flex flex-row text-center m-6">
+            <button 
+              type="button" 
+              className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+              onClick={handleUpdateTurnForCity2Info}
+            >
+              <i className="fi fi-rs-user-add mr-6"></i>
+              Edit Turn
+            </button>
+            <button 
+              type="button" 
+              className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
+              onClick={handleTurnForCity2ClearInfo}
             >
               <i className="fi fi-rs-user-add mr-6"></i>
               Clear All
