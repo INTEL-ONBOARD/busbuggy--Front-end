@@ -49,7 +49,8 @@ function UserManage() {
 
     return (
       <>
-    <div className="flex flex-row justify-around">
+      <div className="bg-white/[.25] p-8 ml-12 rounded-lg shadow-sm">
+    <div className="flex flex-row justify-around mb-10">
       <div className="p-4 bg-transparent flex justify-center"> {/*searchbar*/}
             <label htmlFor="table-search" className="sr-only">
               Search
@@ -374,7 +375,7 @@ function UserManage() {
 </Modal>
 
 
-
+</div>
       </>
     );
   

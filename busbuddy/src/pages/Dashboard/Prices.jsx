@@ -40,7 +40,7 @@ function Prices() {
 
     return (
     <>
-    <div className="p-8 ml-12">
+    <div className="bg-white/[.20] p-8 ml-12 rounded-lg">
 
       <h1 className="text-2xl font-bold mb-4">Bus Fare Amendment(Interterms)</h1>
         <p className="text-gray-700 mb-6">

@@ -84,7 +84,7 @@ const RoutesSection = () => {
 
     {isFareStageSectionOpen ? 
     (
-      <div className="p-8 ml-12">{/*Fare Stage/Route description rendering*/}
+      <div className="bg-white/[.20] p-8 ml-12 rounded-lg">{/*Fare Stage/Route description rendering*/}
 
       <h1 className="text-2xl font-bold">Colombo-Kandy-Express(001)</h1>
 
@@ -263,7 +263,7 @@ const RoutesSection = () => {
     
     ) : (
 
-<div className="p-8 ml-12">       {/*Route list section rendering*/}
+<div className="bg-white/[.20] p-8 ml-12 rounded-lg">       {/*Route list section rendering*/}
     <div className="flex flex-row justify-around">
     <div className="p-4 bg-transparent flex justify-center"> {/*searchbar*/}
           <label htmlFor="table-search" className="sr-only">
