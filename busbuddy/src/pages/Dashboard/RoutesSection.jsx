@@ -84,7 +84,7 @@ const RoutesSection = () => {
 
     {isFareStageSectionOpen ? 
     (
-      <div className="p-8 ml-12">{/*Route description rendering*/}
+      <div className="p-8 ml-12">{/*Fare Stage/Route description rendering*/}
 
       <h1 className="text-2xl font-bold">Colombo-Kandy-Express(001)</h1>
 
@@ -133,7 +133,7 @@ const RoutesSection = () => {
 
 
   <div className="flex gap-10 relative container mx-auto overflow-x-auto rounded-lg  sm:rounded-lg justify-around">
-      {/*left section*/}
+      {/*table*/}
       <table className="w-full text-sm text-left text-gray-500 rounded-lg w-2/3">
         <thead className="text-xs text-gray-700 uppercase bg-white/[.3] rounded-lg ">
           <tr>
@@ -343,54 +343,48 @@ const RoutesSection = () => {
           {[
             {
               id: 1,
-              feeOpportunity: 3,
-              currentPrice: 273.88,
-              newPrice: 435.00
+              routeNo: 3,
+              description: "Colombo-Kandy-Express"
             },
             {
               id: 2,
-              feeOpportunity: 4,
-              currentPrice: 150.00,
-              newPrice: 300.00
+              routeNo: 4,
+              description: "Colombo-Kegalle-Express"
             },
             {
               id: 3,
               name: "Magic Mouse 2",
               color: "Black",
-              category: "Accessories",
-              price: "$99",
+              category: "Accessories"
             },
             {
               id: 4,
               name: "Apple Watch",
               color: "Silver",
-              category: "Accessories",
-              price: "$179",
+              category: "Accessories"
             },
             {
               id: 5,
               name: "iPad",
               color: "Gold",
-              category: "Tablet",
-              price: "$699",
+              category: "Tablet"
             },
             {
               id: 6,
               name: 'Apple iMac 27"',
               color: "Silver",
-              category: "PC Desktop",
-              price: "$3999",
+              category: "PC Desktop"
             },
-          ].map((price) => (
+          ].map((route) => (
             <tr
-            key={price.id}
+            key={route.id}
             className="bg-white/[.6] border-b  hover:bg-gray-50 "
             >
               <td className="w-4 p-4">
                 <div className="flex items-center">
 
                   <label
-                    htmlFor={`checkbox-table-search-${price.id}`}
+                    htmlFor={`checkbox-table-search-${route.id}`}
                     className="sr-only"
                     >
                     checkbox
@@ -401,9 +395,9 @@ const RoutesSection = () => {
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                 >
-                {price.feeOpportunity}
+                {route.routeNo}
               </th>
-              <td className="px-6 py-4">{price.currentPrice}</td>
+              <td className="px-6 py-4">{route.description}</td>
               <td className="px-6 py-4">
                 <div className="text-center">
                   <i className="fi fi-rs-eye hover:text-orange-600 hover:font-bold hover:rounded-full w-10" 
