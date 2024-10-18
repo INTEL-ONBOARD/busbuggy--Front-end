@@ -3,7 +3,13 @@ import Modal from 'react-modal';
 
 function TimeTable() {
 
-  const [isTimetableSectionOpen, setTimetableSectionOpen] = useState(false); // state for view timetable modal
+  const [isTimetableSectionOpen, setTimetableSectionOpen] = useState(false); // state for view timetable section
+
+  const [isAddTurnForCity1ModalOpen, setAddTurnForCity1ModelOpen] = useState(false); //state for add turn for city table's modal
+  const [isEditTurnForCity1ModalOpen, setEditTurnForCity1ModalOpen] = useState(false); //state for edit turn for city1 table'smodal
+
+  const [isAddTurnForCity2ModalOpen, setAddTurnForCity2ModalOpen] = useState(false); //state for add turn for city2 table'smodal
+  const [isEditTurnForCity2ModalOpen, setEditTurnForCity2ModalOpen] = useState(false); //state for edit turn for city2 table'smodal
 
   return (
     <>
@@ -42,7 +48,33 @@ function TimeTable() {
               </div>
             </div>
 
+
+
             <div className="grid grid-cols-2 gap-4 relative container mx-auto overflow-x-auto sm:rounded-lg">
+              {/*Table for City 01*/}
+
+              <div className="flex flex-row justify-center items-center gap-20 mb-2 col-span-2"> {/* Add turn for city 1 Button */}
+              <button 
+                type="button" 
+                className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+                onClick={() => setAddTurnForCity1ModelOpen(true)} //opens add modal for route description
+                >
+                <i className="fi fi-rs-price-add mr-6"></i>
+                Add Turn for city o1
+              </button>
+
+              <button 
+                type="button" 
+                className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+                onClick={() => setAddTurnForCity2ModalOpen(true)} //opens add modal for route description
+                >
+                <i className="fi fi-rs-price-add mr-6"></i>
+                Add Turn for city o2
+              </button>
+
+            </div>
+
+
               <div>
                 <table className="w-full text-sm text-left text-gray-500">
                   <thead className="text-xs text-gray-700 uppercase bg-white/[.3] rounded-lg">
@@ -52,70 +84,64 @@ function TimeTable() {
                           <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
                         </div>
                       </th>
-                      <th scope="col" className="px-6 py-3">Origin Departure</th>
-                      <th scope="col" className="px-6 py-3">Destination Arrival</th>
-                      <th scope="col" className="px-6 py-3">Route Info</th>
+                      <th scope="col" className="px-6 py-3">Turn No</th>
+                      <th scope="col" className="px-6 py-3">From City 01</th>
+                      <th scope="col" className="px-6 py-3">To City 02</th>
                       <th scope="col" className="px-6 py-3">Edit</th>
                       <th scope="col" className="px-6 py-3">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {/* First Table Data */}
+                    {/*City 01 Table Data */}
                     {[
                       {
                         id: 1,
-                        name: 'Apple MacBook Pro 17"',
-                        color: "Silver",
-                        category: "Laptop",
-                        price: "$2999",
+                        turnNo: 2,
+                        departureTime: "9.00am",
+                        arrivalTime: "10.30pm"
                       },
                       {
                         id: 2,
-                        name: "Microsoft Surface Pro",
-                        color: "White",
-                        category: "Laptop PC",
-                        price: "$1999",
+                        turnNo: 4,
+                        departureTime: "11.00am",
+                        arrivalTime: "1.00pm"
                       },
                       {
                         id: 3,
                         name: "Magic Mouse 2",
                         color: "Black",
-                        category: "Accessories",
-                        price: "$99",
+                        category: "Accessories"
                       },
                       {
                         id: 4,
                         name: "Apple Watch",
                         color: "Silver",
-                        category: "Accessories",
-                        price: "$179",
+                        category: "Accessories"
                       },
                       {
                         id: 5,
                         name: "iPad",
                         color: "Gold",
-                        category: "Tablet",
-                        price: "$699",
+                        category: "Tablet"
                       },
                       {
                         id: 6,
                         name: 'Apple iMac 27"',
                         color: "Silver",
-                        category: "PC Desktop",
-                        price: "$3999",
+                        category: "PC Desktop"
                       },
-                    ].map((item) => (
-                      <tr key={item.id} className="bg-white/[.6] border-b hover:bg-gray-50">
+                    ].map((city1) => (
+                      <tr key={city1.id} className="bg-white/[.6] border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
-                            <label htmlFor={`checkbox-table-search-${item.id}`} className="sr-only">checkbox</label>
+                            <label htmlFor={`checkbox-table-search-${city1.id}`} className="sr-only">checkbox</label>
                           </div>
                         </td>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                          {item.name}
+                          {city1.turnNo}
                         </th>
-                        <td className="px-6 py-4">{item.color}</td>
-                        <td className="px-6 py-4">{item.category}</td>
+                        <td className="px-6 py-4">{city1.arrivalTime}</td>
+                        <td className="px-6 py-4">{city1.departureTime}</td>
                         <td className="px-6 py-4">
                           <div className="text-center">
                             <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10"></i>
@@ -132,7 +158,7 @@ function TimeTable() {
                 </table>
               </div>
 
-              {/* Second Table */}
+              {/* Table for city 02*/}
               <div>
                 <table className="w-full text-sm text-left text-gray-500">
                   <thead className="text-xs text-gray-700 uppercase bg-white/[.3] rounded-lg">
@@ -142,70 +168,64 @@ function TimeTable() {
                           <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
                         </div>
                       </th>
-                      <th scope="col" className="px-6 py-3">Origin Departure</th>
-                      <th scope="col" className="px-6 py-3">Destination Arrival</th>
-                      <th scope="col" className="px-6 py-3">Route Info</th>
+                      <th scope="col" className="px-6 py-3">Turn No</th>
+                      <th scope="col" className="px-6 py-3">From City 02</th>
+                      <th scope="col" className="px-6 py-3">To City 01</th>
                       <th scope="col" className="px-6 py-3">Edit</th>
                       <th scope="col" className="px-6 py-3">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {/* Second Table Data */}
+                    {/* City 02 Table Data */}
                     {[
                       {
-                        id: 7,
-                        name: 'Dell XPS 13',
-                        color: "Black",
-                        category: "Laptop",
-                        price: "$999",
+                        id: 1,
+                        turnNo: 2,
+                        departureTime: "3.00am",
+                        arrivalTime: "11.50pm"
                       },
                       {
-                        id: 8,
-                        name: "Lenovo ThinkPad",
-                        color: "Black",
-                        category: "Laptop",
-                        price: "$1299",
+                        id: 2,
+                        turnNo: 4,
+                        departureTime: "3.00am",
+                        arrivalTime: "4.00pm"
                       },
                       {
                         id: 9,
                         name: "Logitech Mouse",
                         color: "White",
-                        category: "Accessories",
-                        price: "$49",
+                        category: "Accessories"
                       },
                       {
                         id: 10,
                         name: "Samsung Galaxy Tab",
                         color: "Black",
-                        category: "Tablet",
-                        price: "$499",
+                        category: "Tablet"
                       },
                       {
                         id: 11,
                         name: "HP Envy",
                         color: "Silver",
-                        category: "Laptop",
-                        price: "$899",
+                        category: "Laptop"
                       },
                       {
                         id: 12,
                         name: 'Asus ZenBook 14"',
                         color: "Blue",
-                        category: "Laptop",
-                        price: "$1499",
+                        category: "Laptop"
                       },
-                    ].map((item) => (
-                      <tr key={item.id} className="bg-white/[.6] border-b hover:bg-gray-50">
+                    ].map((city2) => (
+                      <tr key={city2.id} className="bg-white/[.6] border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
-                            <label htmlFor={`checkbox-table-search-${item.id}`} className="sr-only">checkbox</label>
+                            <label htmlFor={`checkbox-table-search-${city2.id}`} className="sr-only">checkbox</label>
                           </div>
                         </td>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                          {item.name}
+                          {city2.turnNo}
                         </th>
-                        <td className="px-6 py-4">{item.color}</td>
-                        <td className="px-6 py-4">{item.category}</td>
+                        <td className="px-6 py-4">{city2.arrivalTime}</td>
+                        <td className="px-6 py-4">{city2.departureTime}</td>
                         <td className="px-6 py-4">
                           <div className="text-center">
                             <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10"></i>

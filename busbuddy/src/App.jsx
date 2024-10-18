@@ -19,14 +19,14 @@ function App() {
       <div>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/calculator" element={<Calculator />} />
-          <Route path="/timetable" element={<Timetable />} />
+          <Route path="/"                 element={<Home />} />
+          <Route path="/login"            element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/register"         element={<Register />} />
+          <Route path="/calculator"       element={<Calculator />} />
+          <Route path="/timetable"        element={<Timetable />} />
           
           {isAuthenticated && (
-            <Route path="/dashboard/*" element={<DashboardHome />} />
+            <Route path="/dashboard/*"    element={<DashboardHome />} />
           )}
         </Routes>
         <Footer />
