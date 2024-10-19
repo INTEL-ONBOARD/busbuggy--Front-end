@@ -143,7 +143,7 @@ function Calculator() {
           {!isFareLoaded && 
           <div>          
             <div className="text-gray-100 p-10 rounded-lg  bg-black/[.20] min-h-1">
-              <h3>Something went wrong!</h3>
+              <p>Calculation failed, please try again</p>
             </div>
           </div>}
 

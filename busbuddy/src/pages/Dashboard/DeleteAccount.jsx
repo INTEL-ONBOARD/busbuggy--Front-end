@@ -85,7 +85,10 @@ function DeleteAccount() {
         className="flex rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
       >
         <h2 className="m-6 text-red-500 text-3xl">Account Delete Confirmation</h2>
-        <div className="bg-black/[.25] border border-gray-100 border-b-2 shadow-sm p-8 w-1/3 rounded-md">
+        <div className="bg-white border border-gray-200 border-b-2 shadow-sm p-8 w-1/3 rounded-md">
+        <div className="text-center">
+        <i className="fi fi-rs-triangle-warning text-9xl text-red-500"></i>
+        </div>
           <h1 className="text-center text-red-500 text-3xl">Warning</h1>
           <p className="text-black m-6 rounded-md p-6 text-lg">
             Are you sure you want to delete your account?
