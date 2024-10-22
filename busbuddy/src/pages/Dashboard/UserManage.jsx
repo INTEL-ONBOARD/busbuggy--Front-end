@@ -63,7 +63,8 @@ function UserManage() {
   const loadEditUsers = async (userId) => {
     try {
       const result = await axios.get(`http://localhost:8082/api/users/${userId}`);
-      setEditUser(result.data);
+      console.log(result.data.data)
+      setEditUser(result.data.data);
       setSelectedUserId(userId);
       setEditUserModalOpen(true);
     } catch (error) {
