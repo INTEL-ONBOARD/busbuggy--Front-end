@@ -1,5 +1,34 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+function Login({ setIsAuthenticated }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    // Call your API here and authenticate the user
+    setIsAuthenticated(true);  // Assuming login is successful
+    navigate('/dashboard/profile');
+  };
+
+  return (
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Login({ setIsAuthenticated }) {
@@ -9,7 +38,6 @@ function Login({ setIsAuthenticated }) {
     email: "",
     password: ""
   });
-  const [message, setMessage] = useState(""); //incorrect password messege and stuff to handlelogin
 
   // Handler for login info form input changes
   const handleLoginInputChange = (e) => {
@@ -20,27 +48,24 @@ function Login({ setIsAuthenticated }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-
       const response = await axios.post("http://localhost:8082/api/users/check", {
         email: loginInfo.email,
         password: loginInfo.password
       });
 
+      console.log("Login handle triggered");
+
       // Check if login is successful
       if (response.data.success) {
-        //stored userdata in the local storage
-        localStorage.setItem('userData', JSON.stringify(response.data.data));
-        setIsAuthenticated(true); //enables the router link from App.jsx via parameters?
-        console.log("login success"+response.data.message); //testing response
-        console.log(JSON.parse(localStorage.getItem('userData'))); //testing local storage
+        console.log(response.data.data.username); // Log the username
+        // Navigate to the dashboard/profile if login is successful
+        console.log("login success");
         navigate('/dashboard/profile');
       } else {
         console.log("Login failed: ", response.data.message);
-        setMessage("Invalid email or password");
       }
     } catch (error) {
       console.log("Error during login: ", error);
-      setMessage("Invalid email or password");
     }
   };
 
@@ -78,8 +103,6 @@ function Login({ setIsAuthenticated }) {
                   className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" 
                   style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }} 
                 />
-                {/* Error Message */}
-                {message && <div className="text-red-500 text-center mb-2">{message}</div>}                
                 <button 
                   type="submit" 
                   className="transition duration-200 bg-orange-500 hover:bg-orange-600 focus:bg-orange-700 focus:shadow-sm focus:ring-4 focus:ring-orange-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
@@ -117,4 +140,4 @@ function Login({ setIsAuthenticated }) {
   );
 }
 
-export default Login;
+export default Login2;
