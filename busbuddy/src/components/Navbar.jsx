@@ -94,7 +94,7 @@ function Navbar() {
         <i className="fi fi-rs-triangle-warning text-9xl text-orange-400"></i>
         </div>
           <h1 className="text-center text-orange-400 text-3xl">Warning</h1>
-          <p className="text-black m-6 rounded-md p-6 text-lg">
+          <p className="text-black m-6 rounded-lg p-6 text-lg">
             Are you sure you want to Logout from your Account?
           </p>
 

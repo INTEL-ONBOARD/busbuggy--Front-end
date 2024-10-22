@@ -1,45 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-
+import axios from 'axios';
 Modal.setAppElement('#root'); // For accessibility reasons
 
 const UserProfile = () => {
-  // State for Modals
+  // Initialize the user state as an object
+  const [user, setUser] = useState({});
+  const [profilePic, setProfilePic] = useState(null);
+
+  // Fetch user data on component mount
+  useEffect(() => {
+    console.log("useEffect triggered");
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    console.log("local storage id is: "+userData.id);
+    loadUser(userData.id);
+  }, []); // Empty dependency array to trigger only once
+
+  const loadUser = async (userId) => {
+    try {
+      const result = await axios.get(`http://localhost:8082/api/users/${userId}`);
+      console.log(result.data);
+      // Access the 'data' property from the API response
+      setUser(result.data.data); // Now correctly sets the user object
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  // Modal states
   const [isProfilePicModalOpen, setProfilePicModalOpen] = useState(false);
   const [isEditInfoModalOpen, setEditInfoModalOpen] = useState(false);
 
-  // User info state
-  const [userInfo, setUserInfo] = useState({
-    firstName: 'Sandy',
-    lastName: 'Wilson',
-    email: 'sandy@gmail.com',
-    phone: '+94 76 123 4567',
-    bio: 'Team Manager'
-  });
-
-  const [profilePic, setProfilePic] = useState(null);
-
-  // Handler for profile picture upload
+  // Handlers for profile picture and user info
   const handleProfilePicUpload = (e) => {
     setProfilePic(URL.createObjectURL(e.target.files[0]));
-    setProfilePicModalOpen(false); // Close modal after upload
+    setProfilePicModalOpen(false);
   };
 
-  // Handler for user info form changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserInfo({ ...userInfo, [name]: value });
+    setUser({ ...user, [name]: value });
   };
 
-  // Handler to save updated info
   const handleSaveInfo = () => {
-    console.log('Updated user info:', userInfo);
-    setEditInfoModalOpen(false); // Close modal after save
+    console.log('Updated user info:', user);
+    setEditInfoModalOpen(false);
   };
 
-  // Handler to clear user info form
   const handleClearInfo = () => {
-    setUserInfo({
+    setUser({
       firstName: '',
       lastName: '',
       email: '',
@@ -57,8 +66,8 @@ const UserProfile = () => {
           alt="Profile"
           className="rounded-full w-32 h-32 mb-4"
         />
-        <h2 className="text-xl font-semibold">Mr. {userInfo.firstName} {userInfo.lastName}</h2>
-        <p className="text-gray-500">{userInfo.bio}</p>
+        <h2 className="text-xl font-semibold">Mr. {user.firstName} {user.lastName}</h2>
+        <p className="text-gray-500">{user.bio}</p>
 
         <button
           className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded"
@@ -77,11 +86,11 @@ const UserProfile = () => {
       <div className="flex flex-col bg-white/[.35] p-6 shadow-md flex-1 rounded-md justify-between">
         <h2 className="text-lg font-bold">User Information</h2>
         <div className="mt-4">
-          <p><strong>First Name: </strong>{userInfo.firstName}</p>
-          <p><strong>Last Name: </strong>{userInfo.lastName}</p>
-          <p><strong>Email Address: </strong>{userInfo.email}</p>
-          <p><strong>Phone: </strong>{userInfo.phone}</p>
-          <p><strong>Bio: </strong>{userInfo.bio}</p>
+          <p><strong>First Name: </strong>{user.firstName}</p>
+          <p><strong>Last Name: </strong>{user.lastName}</p>
+          <p><strong>Email Address: </strong>{user.email}</p>
+          <p><strong>Phone: </strong>{user.phone}</p>
+          <p><strong>Bio: </strong>{user.bio}</p>
         </div>
 
         <button
@@ -122,7 +131,7 @@ const UserProfile = () => {
           <input
             type="text"
             name="firstName"
-            value={userInfo.firstName}
+            value={user.firstName || ''}
             onChange={handleInputChange}
             className="border p-2 rounded w-full"
           />
@@ -130,7 +139,7 @@ const UserProfile = () => {
           <input
             type="text"
             name="lastName"
-            value={userInfo.lastName}
+            value={user.lastName || ''}
             onChange={handleInputChange}
             className="border p-2 rounded w-full"
           />
@@ -138,7 +147,7 @@ const UserProfile = () => {
           <input
             type="email"
             name="email"
-            value={userInfo.email}
+            value={user.email || ''}
             onChange={handleInputChange}
             className="border p-2 rounded w-full"
           />
@@ -146,7 +155,7 @@ const UserProfile = () => {
           <input
             type="text"
             name="phone"
-            value={userInfo.phone}
+            value={user.phone || ''}
             onChange={handleInputChange}
             className="border p-2 rounded w-full"
           />
@@ -154,7 +163,7 @@ const UserProfile = () => {
           <input
             type="text"
             name="bio"
-            value={userInfo.bio}
+            value={user.bio || ''}
             onChange={handleInputChange}
             className="border p-2 rounded w-full"
           />
