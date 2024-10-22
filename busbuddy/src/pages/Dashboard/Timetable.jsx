@@ -381,7 +381,7 @@ function TimeTable() {
   
 
     <div className="flex gap-10 relative container mx-auto overflow-x-auto rounded-lg  sm:rounded-lg justify-around">{/*rendering route table*/}
-    <table className="w-full text-sm text-left text-gray-500 rounded-lg w-2/3">
+    <table className="text-sm text-left text-gray-500 rounded-lg w-2/3">
         <thead className="text-xs text-gray-700 uppercase bg-white/[.3] rounded-lg ">
           <tr>
             <th scope="col" className="p-4">

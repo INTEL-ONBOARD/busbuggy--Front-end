@@ -4,7 +4,7 @@ function InfoSection() {
     return (
     <>
     
-    <div className="bg-white/[.35] p-8 ml-12 rounded-md p-8">
+    <div className="bg-white/[.35] p-8 ml-12 rounded-md">
 
       <h1 className="text-3xl font-bold mb-6 text-black">About BusBuddy</h1>
 
