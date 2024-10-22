@@ -3,6 +3,8 @@ import Modal from 'react-modal';
 import axios from 'axios';
 
 function UserManage() {
+
+  const [userData, setUserData] = useState(null);  // State to store logged-in user data(for delete button)
   const [viewUserList, setViewUserList] = useState([]); // Correct initialization as an array
   const [addUser, setAddUser] = useState({
     firstName: '',
@@ -25,6 +27,7 @@ function UserManage() {
   const [selectedUserId, setSelectedUserId] = useState(null);
 
   useEffect(() => {
+    setUserData(JSON.parse(localStorage.getItem('userData'))); //for delete button
     loadUserList();
   }, []);
 
@@ -52,8 +55,15 @@ function UserManage() {
 
   const deleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:8082/api/users/${userId}`);
-      loadUserList(); // Reload the user list after deleting
+      console.log("Deletion target: "+userData.id);
+      if(userId === userData.id){
+        console.log("deleting your own account is not allowed");
+      }
+      else{
+        await axios.delete(`http://localhost:8082/api/users/${userId}`);
+        loadUserList(); // Reload the user list after deleting
+
+      }
     } catch (error) {
       console.error('Error deleting user:', error);
     }
@@ -169,10 +179,12 @@ function UserManage() {
                     ></i>
                   </td>
                   <td className="px-6 py-4 text-center">
+                  {userData && userData.id !== user.id && (  // Conditionally render delete button
                   <i
-                      className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"
-                      onClick={() => deleteUser(user.id)}
-                    ></i>                  
+                    className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"
+                    onClick={() => deleteUser(user.id)}
+                  ></i>
+                )}                
                   </td>
                 </tr>
               ))}
