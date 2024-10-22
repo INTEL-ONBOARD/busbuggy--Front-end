@@ -24,10 +24,12 @@ function App() {
           <Route path="/register"         element={<Register />} />
           <Route path="/calculator"       element={<Calculator />} />
           <Route path="/timetable"        element={<Timetable />} />
-          
+          <Route path="/dashboard/*"    element={<DashboardHome />} />
+          {/*
           {isAuthenticated && (
             <Route path="/dashboard/*"    element={<DashboardHome />} />
           )}
+           */}
         </Routes>
         <Footer />
       </div>
