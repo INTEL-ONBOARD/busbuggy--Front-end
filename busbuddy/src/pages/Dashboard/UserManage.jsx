@@ -50,6 +50,15 @@ function UserManage() {
     }
   };
 
+  const deleteUser = async (userId) => {
+    try {
+      await axios.delete(`http://localhost:8082/api/users/${userId}`);
+      loadUserList(); // Reload the user list after deleting
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  };
+
   // Loading user data into edit modal's textboxes
   const loadEditUsers = async (userId) => {
     try {
@@ -159,7 +168,10 @@ function UserManage() {
                     ></i>
                   </td>
                   <td className="px-6 py-4 text-center">
-                    <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"></i>
+                  <i
+                      className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"
+                      onClick={() => deleteUser(user.id)}
+                    ></i>                  
                   </td>
                 </tr>
               ))}
