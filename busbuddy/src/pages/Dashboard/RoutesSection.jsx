@@ -138,20 +138,6 @@ const RoutesSection = () => {
     });
   };
 
-  //
-  // Handler for edit route input form changes
-  const handleRouteInputChange = (e) => {
-    const { name, value} = e.target;
-    setRouteInfo({ ...routeInfo, [name]: value });
-  };
-
-  //
-  const handleRouteUpdateInfo = () => {         // Handler to save updated info
-    console.log('Updated new route info:', routeInfo);
-    setEditRouteModalOpen(false); // Close modal after update
-  };
-
-
   // Handler for edit fare stage input form changes
   const handleFareStageInputChange = (e) => {
     const { name, value} = e.target;
@@ -175,6 +161,34 @@ const RoutesSection = () => {
       price: 0.00,
       city: ""
     });
+  };
+
+  //triggers when view button was clicked
+  const handleFareStageLoading = (routeName) => {
+    console.log("ready to fetch from routeName: "+routeName);
+    loadFareStageList(routeName);
+    setFareStageSectionOpen(true);
+    
+  }
+
+  const [viewFareStageList, setViewFareStageList] = useState([]); // For loading price data into the table
+
+  // Fetchs farestage/schema list by routeName from API under handleFareStageLoading method
+  const loadFareStageList = async (routeName) => {
+    try {
+      const result = await axios.get('http://localhost:8081/api/maps');
+      console.log(result.data);//for testing
+      console.log(result.data[0].schemaMap.name); //for testing
+      setViewFareStageList(result.data);
+
+    // Filter data based on routeName and schemaMap.name
+    const filteredData = result.data.filter(item => item.schemaMap.name === routeName);
+    console.log(filteredData); //for testing
+    setViewFareStageList(filteredData);
+        
+    } catch (error) {
+      console.error('Error fetching all farestage data hmm: ', error);
+    }
   };
 
 
@@ -251,9 +265,6 @@ const RoutesSection = () => {
             <th scope="col" className="px-6 py-3">
               City
             </th>
-            <th scope="col" className="px-6 py-3">
-              Price
-            </th>
             <th scope="col" className="px-6 py-3 w-6">
               Edit
             </th>
@@ -264,48 +275,7 @@ const RoutesSection = () => {
           </tr>
         </thead>
         <tbody >
-          {[
-            {
-              id: 1,
-              fareStage: 3,
-              city: "Pilimathalawa",
-              price: 435.00
-            },
-            {
-              id: 2,
-              fareStage: 4,
-              city: "Kandy",
-              price: 810.00
-            },
-            {
-              id: 3,
-              name: "Magic Mouse 2",
-              color: "Black",
-              category: "Accessories",
-              price: "$99",
-            },
-            {
-              id: 4,
-              name: "Apple Watch",
-              color: "Silver",
-              category: "Accessories",
-              price: "$179",
-            },
-            {
-              id: 5,
-              name: "iPad",
-              color: "Gold",
-              category: "Tablet",
-              price: "$699",
-            },
-            {
-              id: 6,
-              name: 'Apple iMac 27"',
-              color: "Silver",
-              category: "PC Desktop",
-              price: "$3999",
-            },
-          ].map((fareStage) => (
+          {viewFareStageList.map((fareStage) => (
             <tr
             key={fareStage.id}
             className="bg-white/[.6] border-b  hover:bg-gray-50 "
@@ -325,10 +295,9 @@ const RoutesSection = () => {
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                 >
-                {fareStage.fareStage}
+                {fareStage.milestone}
               </th>
-              <td className="px-6 py-4">{fareStage.city}</td>
-              <td className="px-6 py-4">{fareStage.price}</td>
+              <td className="px-6 py-4">{fareStage.info}</td>
               <td className="px-6 py-4">
                 <div className="text-center">
                   <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10" 
@@ -468,9 +437,7 @@ const RoutesSection = () => {
                   <i className="fi fi-rs-eye hover:text-orange-600 hover:font-bold hover:rounded-full w-10" 
                      onClick={() =>{ 
                       console.log(route.id);
-                       setSelectedRouteId(route.id);//should i make sure this called before setFareStageSectionOpen(true)?
-                       console.log("target id for fare stage is ready: "+selectedRouteId);
-                      setFareStageSectionOpen(true);
+                      handleFareStageLoading(route.name);
                      }}>
                   </i>
                 </div>
