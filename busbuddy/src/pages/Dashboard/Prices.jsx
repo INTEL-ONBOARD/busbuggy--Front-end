@@ -1,39 +1,112 @@
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 function Prices() {
   
   const [isAddPriceModelOpen, setAddPriceModalOpen] = useState(false); //state for add price modal
   const [isEditPriceModelOpen, setEditPriceModalOpen] = useState(false); //state for edit price modal
 
-    const [priceInfo, setPriceInfo] = useState({     // Price info state
-      id: 1,
-      feeOpportunity: 1,
-      currentPrice: 200.00,
-      newPrice: 275.00
-    });
+  const [selectedPriceId, setSelectedPriceId] = useState(null);
+  const [viewPriceList, setViewPriceList] = useState([]); // For loading price data into the table
+  const [addPrice, setAddPrice] = useState({     // Price info state
+    id: null,
+    milestone: '',
+    oldPrice: null,
+    newPrice: null
+  });
 
-  // Handler for price info form changes
-  const handleInputChange = (e) => {
-    const { name, value} = e.target;
-    setPriceInfo({ ...priceInfo, [name]: value });
+  const [editPrice, setEditPrice] = useState({     // Price info state
+    id: null,
+    milestone: '',
+    oldPrice: null,
+    newPrice: null
+  });
+
+    useEffect(() => {
+      loadPriceList();
+    }, []);
+  
+    // Fetch price list from API
+    const loadPriceList = async () => {
+      try {
+        const result = await axios.get('http://localhost:8081/api/prices');
+        setViewPriceList(result.data);
+      } catch (error) {
+        console.error('Error fetching all price data hmm:', error);
+      }
+    };
+
+      // Add a new price
+  const addPrices = async () => {
+    try {
+      console.log("new price added: addprices triggered");
+      await axios.post('http://localhost:8081/api/prices', addPrice);
+      setAddPriceModalOpen(false);
+      loadPriceList();
+      handleClearInfo();
+    } catch (error) {
+      console.error('Error creating prices:', error);
+    }
   };
 
-    const handleCreateInfo = () => {         // Handler to save created info
-      console.log('Created new price info:', priceInfo);
-      setAddPriceModalOpen(false); // Close modal after creation
-    };
+  const deletePrice = async (priceId) => {
+    try {
+      console.log("Price Deletion target: "+priceId);
+      await axios.delete(`http://localhost:8081/api/prices/${priceId}`);
+      loadPriceList(); // Reload the price list after deleting
+    } catch (error) {
+      console.error('Error deleting price:', error);
+    }
+  };
 
-    const handleUpdateInfo = () => {         // Handler to save updated info
-      console.log('Updated new price info:', priceInfo);
-      setEditPriceModalOpen(false); // Close modal after update
-    };
+  // Loading price data into edit modal's textboxes
+  const loadEditPrices = async (priceId) => {
+    try {
+      const result = await axios.get(`http://localhost:8081/api/prices/${priceId}`);
+      console.log(result.data)
+      setEditPrice(result.data);
+      setSelectedPriceId(priceId);
+      setEditPriceModalOpen(true);
+    } catch (error) {
+      console.error('Error loading price data for edit:', error);
+    }
+  };
+
+  //updating the finilazed edit data via the api
+  const editPrices = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`http://localhost:8081/api/prices/${selectedPriceId}`, editPrice);
+      setEditPriceModalOpen(false);
+      loadPriceList();
+    } catch (error) {
+      console.error('Error updating price:', error);
+    }
+  };
+
+  // Handler for add price info form changes
+  const handleAddInputChange = (e) => {
+    const { name, value} = e.target;
+    setAddPrice({ ...addPrice, [name]: value });
+  };
+  // Handler for edit price info form changes(editting is irrelevent for now)
+  const handleEditInputChange = (e) => {
+    const { name, value} = e.target;
+    setEditPrice({ ...editPrice, [name]: value });
+  };
 
     const handleClearInfo = () => {        // Handler to clear price info form
-      setPriceInfo({
-        feeOpportunity: 0,
-        currentPrice: 0.00,
-        newPrice: 0.00
+      console.log("clear info triggered");
+      setAddPrice({
+        milestone: '',
+        oldPrice: '',
+        newPrice: ''
+      });
+      setEditPrice({
+        milestone: '',
+        oldPrice: '',
+        newPrice: ''
       });
     };
 
@@ -125,60 +198,15 @@ function Prices() {
           </tr>
         </thead>
         <tbody >
-          {[
-            {
-              id: 1,
-              feeOpportunity: 3,
-              currentPrice: 273.88,
-              newPrice: 435.00
-            },
-            {
-              id: 2,
-              feeOpportunity: 4,
-              currentPrice: 150.00,
-              newPrice: 300.00
-            },
-            {
-              id: 3,
-              name: "Magic Mouse 2",
-              color: "Black",
-              category: "Accessories",
-              price: "$99",
-            },
-            {
-              id: 4,
-              name: "Apple Watch",
-              color: "Silver",
-              category: "Accessories",
-              price: "$179",
-            },
-            {
-              id: 5,
-              name: "iPad",
-              color: "Gold",
-              category: "Tablet",
-              price: "$699",
-            },
-            {
-              id: 6,
-              name: 'Apple iMac 27"',
-              color: "Silver",
-              category: "PC Desktop",
-              price: "$3999",
-            },
-          ].map((price) => (
-            <tr
-            key={price.id}
+          {viewPriceList.map((price) => (
+            <tr key={price.id}
             className="bg-white/[.6] border-b  hover:bg-gray-50 "
             >
               <td className="w-4 p-4">
                 <div className="flex items-center">
-
                   <label
                     htmlFor={`checkbox-table-search-${price.id}`}
-                    className="sr-only"
-                    >
-                    checkbox
+                    className="sr-only">checkbox
                   </label>
                 </div>
               </td>
@@ -186,20 +214,23 @@ function Prices() {
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                 >
-                {price.feeOpportunity}
+                {price.milestone}
               </th>
-              <td className="px-6 py-4">{price.currentPrice}</td>
+              <td className="px-6 py-4">{price.oldPrice}</td>
               <td className="px-6 py-4">{price.newPrice}</td>
               <td className="px-6 py-4">
                 <div className="text-center">
                   <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10" 
-                     onClick={() => setEditPriceModalOpen(true)}>
+                     onClick={() => loadEditPrices(price.id)}>
                   </i>
                 </div>
               </td>
               <td>
                 <div className="text-center">
-                  <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"></i>
+                  <i 
+                    className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"
+                    onClick={() => deletePrice(price.id)}>
+                  </i>
                 </div>
               </td>
 
@@ -225,32 +256,35 @@ function Prices() {
       <label className="block text-white mb-1">Price Opportunity</label>
           <input
             type="text"
-            name="feeOpportunity"
+            name="milestone"
             className="w-full p-2 rounded-md border-none focus:outline-none"
             placeholder="Enter price opportunity"
-            onChange={handleInputChange}
+            value={addPrice.milestone}
+            onChange={handleAddInputChange}
             />
           <label className="block text-white mb-1">Previous Price</label>
           <input
-            type="text"
-            name="currentPrice"
+            type="number"
+            name="oldPrice"
             className="w-full p-2 rounded-md border-none focus:outline-none"
             placeholder="Enter current price"
-            onChange={handleInputChange}
+            value={addPrice.oldPrice}
+            onChange={handleAddInputChange}
             />
           <label className="block text-white mb-1">Current Price</label>
           <input
-            type="text"
+            type="number"
             name="newPrice"
             className="w-full p-2 rounded-md border-none focus:outline-none"
             placeholder="Enter new price"
-            onChange={handleInputChange}
+            value={addPrice.newPrice}
+            onChange={handleAddInputChange}
             />
             <div className="flex flex-row text-center m-6">
             <button 
               type="button" 
               className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-              onClick={handleCreateInfo}
+              onClick={addPrices}
               >
                 {/*<i className="fi fi-rs-user-add mr-6"></i>*/}
                 Add Price
@@ -262,7 +296,14 @@ function Prices() {
               >
                 Clear All
           </button>
-            </div>
+          <button
+              type="button"
+              className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-red-400/80 rounded-md border border-red-400 hover:text-white hover:border-red-500 focus:outline-none"
+              onClick={() => setAddPriceModalOpen(false)}
+          >
+              Cancel
+          </button>
+        </div>
       </form>
     </div>
     </Modal>
@@ -281,21 +322,21 @@ function Prices() {
       <label className="block text-white mb-1">Fee Opportunity</label>
       <input
         type="number"
-        name="feeOpportunity"  
+        name="milestone"  
         className="w-full p-2 rounded-md border-none focus:outline-none"
         placeholder="Enter price opportunity"
-        value={priceInfo.feeOpportunity}
-        onChange={handleInputChange}
+        value={editPrice.milestone}
+        onChange={handleEditInputChange}
       />
 
       <label className="block text-white mb-1">Current Price</label>
       <input
         type="number"
-        name="currentPrice"  
+        name="oldPrice"  
         className="w-full p-2 rounded-md border-none focus:outline-none"
         placeholder="Enter current name"
-        value={priceInfo.currentPrice}
-        onChange={handleInputChange}
+        value={editPrice.oldPrice}
+        onChange={handleEditInputChange}
       />
 
       <label className="block text-white mb-1">New Price</label>
@@ -304,26 +345,25 @@ function Prices() {
         name="newPrice"  
         className="w-full p-2 rounded-md border-none focus:outline-none"
         placeholder="Enter new price"
-        value={priceInfo.newPrice}
-        onChange={handleInputChange}
+        value={editPrice.newPrice}
+        onChange={handleEditInputChange}
       />
 
       <div className="flex flex-row text-center m-6">
         <button 
           type="button" 
           className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-          onClick={handleUpdateInfo}
+          onClick={editPrices}
         >
           <i className="fi fi-rs-user-add mr-6"></i>
           Edit Price
         </button>
-        <button 
-          type="button" 
-          className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
-          onClick={handleClearInfo}
+        <button
+          type="button"
+          className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-red-400/80 rounded-md border border-red-400 hover:text-white hover:border-red-500 focus:outline-none"
+          onClick={() => setEditUserModalOpen(false)}
         >
-          <i className="fi fi-rs-user-add mr-6"></i>
-          Clear All
+          Cancel
         </button>
       </div>
     </form>

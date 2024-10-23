@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function UserManage() {
 
-  const [userData, setUserData] = useState(null);  // State to store logged-in user data(for delete button)
+  const [userData, setUserData] = useState(null);  // State to store logged-in user data(for self delete prevention from delete button)
   const [viewUserList, setViewUserList] = useState([]); // Correct initialization as an array
   const [addUser, setAddUser] = useState({
     firstName: '',
@@ -24,7 +24,7 @@ function UserManage() {
 
   const [isAddUserModelOpen, setAddUserModalOpen] = useState(false);
   const [isEditUserModelOpen, setEditUserModalOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null); //used for get user by id in update and delete operations
 
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem('userData'))); //for delete button
@@ -82,6 +82,7 @@ function UserManage() {
     }
   };
 
+  //updating the finilazed edit data via the api
   const editUsers = async (e) => {
     e.preventDefault();
     try {

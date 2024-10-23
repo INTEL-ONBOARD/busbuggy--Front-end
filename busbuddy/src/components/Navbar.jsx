@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 
 function Navbar() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // state to check user info from localStorage
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // state to check user info from localStorage
   const [isLogoutConfModalOpen, SetIsLogoutConfModalOpen] = useState(false); //state for logout confirmation modal
 
   // Check if user data exists in localStorage when the component mounts
@@ -17,7 +17,7 @@ function Navbar() {
     } else {
       setIsLoggedIn(false); // User is not logged in
     }
-  }, [localStorage.getItem('userData')]);
+  }, [localStorage.getItem('userData')] || []);
 
   // Logout handler: clear user data and set isLoggedIn to false
   const handleLogout = () => {
