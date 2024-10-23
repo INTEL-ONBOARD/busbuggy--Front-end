@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import axios from 'axios';
 
 function Prices() {
-  
+
   const [isAddPriceModelOpen, setAddPriceModalOpen] = useState(false); //state for add price modal
   const [isEditPriceModelOpen, setEditPriceModalOpen] = useState(false); //state for edit price modal
 
@@ -49,17 +49,7 @@ function Prices() {
       console.error('Error creating prices:', error);
     }
   };
-
-  const deletePrice = async (priceId) => {
-    try {
-      console.log("Price Deletion target: "+priceId);
-      await axios.delete(`http://localhost:8081/api/prices/${priceId}`);
-      loadPriceList(); // Reload the price list after deleting
-    } catch (error) {
-      console.error('Error deleting price:', error);
-    }
-  };
-
+  
   // Loading price data into edit modal's textboxes
   const loadEditPrices = async (priceId) => {
     try {
@@ -72,7 +62,7 @@ function Prices() {
       console.error('Error loading price data for edit:', error);
     }
   };
-
+  
   //updating the finilazed edit data via the api
   const editPrices = async (e) => {
     e.preventDefault();
@@ -85,12 +75,23 @@ function Prices() {
     }
   };
 
+  const deletePrice = async (priceId) => {
+    try {
+      console.log("Price Deletion target: "+priceId);
+      await axios.delete(`http://localhost:8081/api/prices/${priceId}`);
+      loadPriceList(); // Reload the price list after deleting
+    } catch (error) {
+      console.error('Error deleting price:', error);
+    }
+  };
+
+
   // Handler for add price info form changes
   const handleAddInputChange = (e) => {
     const { name, value} = e.target;
     setAddPrice({ ...addPrice, [name]: value });
   };
-  // Handler for edit price info form changes(editting is irrelevent for now)
+  // Handler for edit price info form changes
   const handleEditInputChange = (e) => {
     const { name, value} = e.target;
     setEditPrice({ ...editPrice, [name]: value });
@@ -299,7 +300,10 @@ function Prices() {
           <button
               type="button"
               className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-red-400/80 rounded-md border border-red-400 hover:text-white hover:border-red-500 focus:outline-none"
-              onClick={() => setAddPriceModalOpen(false)}
+              onClick={() => {
+                setAddPriceModalOpen(false);
+                handleClearInfo();
+              }}
           >
               Cancel
           </button>
@@ -361,7 +365,10 @@ function Prices() {
         <button
           type="button"
           className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-red-400/80 rounded-md border border-red-400 hover:text-white hover:border-red-500 focus:outline-none"
-          onClick={() => setEditUserModalOpen(false)}
+          onClick={() => {
+            setEditPriceModalOpen(false);
+            handleClearInfo();
+          }}
         >
           Cancel
         </button>

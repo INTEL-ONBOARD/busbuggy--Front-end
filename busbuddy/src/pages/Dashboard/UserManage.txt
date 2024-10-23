@@ -1,8 +1,0 @@
-    const [userInfo, setUserInfo] = useState({     // User info state
-      id: '1',
-      firstName: 'Sandy',
-      lastName: 'Wilson',
-      email: 'sandy@gmail.com',
-      contact: '+94 76 123 4567',
-      bio: 'Team Manager'
-    });
