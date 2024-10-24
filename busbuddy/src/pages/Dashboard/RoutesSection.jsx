@@ -94,13 +94,6 @@ const RoutesSection = () => {
     }
   };
 
-  // to be removed
-  const [fareStageInfo, setFareStageInfo] = useState({     // Price info state
-    id: 2,
-    fareStage: 20,
-    price: 300.00,
-    city: "Kandy",
-  });
 
   // Handler for add route info form changes
   const handleAddRouteInputChange = (e) => {
@@ -144,26 +137,6 @@ const RoutesSection = () => {
     });
   };
 
-  //to be removed
-  // Handler for edit fare stage input form changes
-  const handleFareStageInputChange = (e) => {
-    const { name, value} = e.target;
-    setFareStageInfo({ ...fareStageInfo, [name]: value });
-  };
-
-  //to be removed
-  const handleFareStageUpdateInfo = () => {         // Handler to save updated info
-    console.log('Updated new fare stage info:', fareStageInfo);
-    setEditFareStageModalOpen(false); // Close modal after update
-  };
-  //to be removed
-  const handleClearFareStageInfo = () => {        // Handler to clear fare stage input form
-    setFareStageInfo({
-      fareStage: 0,
-      price: 0.00,
-      city: ""
-    });
-  };
 
 
 //---------------------------------------------------------------

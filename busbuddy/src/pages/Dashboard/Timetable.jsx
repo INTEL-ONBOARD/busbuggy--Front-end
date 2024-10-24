@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function TimeTable() {
 
-  const [isTimetableSectionOpen, setTimetableSectionOpen] = useState(false); // state for view timetable section
+  const [isTurntableSectionOpen, setTurntableSectionOpen] = useState(false); // state for view timetable section
 
   const [isAddTurnForCity1ModalOpen, setAddTurnForCity1ModalOpen] = useState(false); //state for add turn for city table's modal
   const [isEditTurnForCity1ModalOpen, setEditTurnForCity1ModalOpen] = useState(false); //state for edit turn for city1 table'smodal
@@ -34,6 +34,69 @@ function TimeTable() {
       console.error('Error fetching all routes data hmm:', error);
     }
   }; 
+
+
+  const [selectedRouteName, setSelectedRouteName] = useState([]); // For loading schemaMap id for cruds for loadFareStageList parameters
+  const [selectedTurntableId, setSelectedTurntableId] = useState(null); //to load turntable by id to edit textboxes
+  const [viewTurntableList, setViewTurntableList] = useState([]); // For loading id-filtered turntable data
+  const [viewIncomingTurntableList, setViewIncomingTurntableList] = useState([]); // For loading incoming-filtered turntable data
+  const [viewOutgoingTurntableList, setViewOutgoingTurntableList] = useState([]); // For loading outgoing-filtered turntable data
+  
+  // Triggered when the view button is clicked
+  const handleTurntableLoading = (currRouteName, currRouteId) => {
+    console.log(currRouteId + ' YESSSS');
+    setSelectedRouteId(currRouteId); // Update selected route ID for filtering turntables
+    loadTurntableList(currRouteId);
+    setTurntableSectionOpen(true);
+  };
+  
+  // Fetches turntable list and filters data based on the routeId
+  const loadTurntableList = async (routeId) => {
+    console.log('Selected Route ID: ' + routeId); // For testing
+    try {
+      const result = await axios.get('http://localhost:8081/api/turns');
+      console.log(result.data); // For testing
+  
+      // Filter data based on schemaMap.id (the routeId)
+      const filteredData = result.data.filter((item) => item.schemaMap.id === routeId);
+      console.log(filteredData); // For testing filtered data
+      setViewTurntableList(filteredData); // Update the state with filtered data
+  
+      // Filter incoming and outgoing data based on "type" (correctly accessing "type" directly from item)
+      const filteredIncomingData = filteredData.filter((item) => item.type === 'return');
+      setViewIncomingTurntableList(filteredIncomingData);
+      
+      const filteredOutgoingData = filteredData.filter((item) => item.type === 'going');
+      setViewOutgoingTurntableList(filteredOutgoingData);
+  
+      console.log("Incoming Data:");
+      console.log(filteredIncomingData);
+      
+      console.log("Outgoing Data:");
+      console.log(filteredOutgoingData);
+  
+    } catch (error) {
+      console.error('Error fetching turntable data: ', error);
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const [turnForCity1Info, setTurnForCity1Info] = useState({     // turn info state for city one table
     id: 1,
@@ -105,7 +168,7 @@ function TimeTable() {
 
   return (
     <>
-      {isTimetableSectionOpen ? (
+      {isTurntableSectionOpen ? (
         <>
         <div>
           <div className="bg-white/[.20] p-8 ml-12 rounded-lg">
@@ -339,7 +402,7 @@ function TimeTable() {
                 <button
                   type="button"
                   className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-transparent focus:border-transparent"
-                  onClick={() => {setTimetableSectionOpen(false);}}
+                  onClick={() => {setTurntableSectionOpen(false);}}
                   >
                   Back to Routes
                 </button>
@@ -436,42 +499,7 @@ function TimeTable() {
           </tr>
         </thead>
         <tbody >
-          {[
-            {
-              id: 1,
-              routeNo: 3,
-              description: "Colombo-Kandy-Express"
-            },
-            {
-              id: 2,
-              routeNo: 4,
-              description: "Colombo-Kegalle-Express"
-            },
-            {
-              id: 3,
-              name: "Magic Mouse 2",
-              color: "Black",
-              category: "Accessories"
-            },
-            {
-              id: 4,
-              name: "Apple Watch",
-              color: "Silver",
-              category: "Accessories"
-            },
-            {
-              id: 5,
-              name: "iPad",
-              color: "Gold",
-              category: "Tablet"
-            },
-            {
-              id: 6,
-              name: 'Apple iMac 27"',
-              color: "Silver",
-              category: "PC Desktop"
-            },
-          ].map((route) => (
+          {viewRouteList.map((route) => (
             <tr
             key={route.id}
             className="bg-white/[.6] border-b  hover:bg-gray-50 "
@@ -491,13 +519,18 @@ function TimeTable() {
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                 >
-                {route.routeNo}
+                {route.name}
               </th>
-              <td className="px-6 py-4">{route.description}</td>
+              <td className="px-6 py-4">{route.routeFrom}-{route.routeTo}</td>
               <td className="px-6 py-4">
                 <div className="text-center">
                   <i className="fi fi-rs-eye hover:text-orange-600 hover:font-bold hover:rounded-full w-10" 
-                     onClick={() => setTimetableSectionOpen(true)}>
+                     //onClick={() => setTurntableSectionOpen(true)}
+                     onClick={() =>{ 
+                      console.log(route.id);
+                      handleTurntableLoading(route.name, route.id);
+                     }}
+                  >
                   </i>
                 </div>
               </td>
