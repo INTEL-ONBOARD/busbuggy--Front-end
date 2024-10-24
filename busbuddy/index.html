@@ -2,22 +2,78 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <script src="https://cdn.tailwindcss.com"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <title>busbuddy</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css"
+    />
+    <style>
+      html,
+      body,
+      #root {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Ensure the root div and its children use flexbox layout */
+      #root {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 100vh; /* Take up the entire viewport height */
+      }
+
+      /* Additional styling for the children */
+      nav {
+        width: 100%;
+        padding: 1rem;
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.1
+        ); /* semi-transparent background */
+        text-align: center;
+      }
+
+      .container {
+        flex: 1; /* Ensure this section takes up the available space between the nav and footer */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+      }
+
+      footer {
+        width: 100%;
+        padding: 1rem;
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.1
+        ); /* semi-transparent background */
+        text-align: center;
+      }
+    </style>
   </head>
   <body
     style="
-      background-image: url('https://img.freepik.com/free-photo/abstract-solid-shining-yellow-gradient-studio-wall-room-background_1258-54539.jpg?t=st=1729101386~exp=1729104986~hmac=6689150cef0438eb9ed9daa31956a0080f1e2608901d360d995a3d1a8ba57157&w=1380');
+      background: linear-gradient(135deg, #fceabb, #f8b500);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      height: 100vh;
     "
   >
-    <div id="root"></div>
+    <div id="root">
+      <nav class="relative bg-transparent shadow">Navbar content</nav>
+      <div class="container mx-auto my-32 md:flex">Main content goes here</div>
+      <footer class="bg-transparent rounded-lg m-4">Footer content</footer>
+    </div>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
