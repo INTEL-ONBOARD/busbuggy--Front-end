@@ -172,7 +172,7 @@ function TimeTable() {
         <>
         <div>
           <div className="bg-white/[.20] p-8 ml-12 rounded-lg">
-      <h1 className="text-2xl font-bold">Timetable for Colombo-Kandy-Express(001)</h1>
+      <h1 className="text-2xl font-bold">Timetable for Colombo-Kandy-Express(001){selectedRouteId}</h1>
             <div className="p-4 w-full bg-transparent flex justify-center">
               {/*searchbar*/}
               <label htmlFor="table-search" className="sr-only">Search</label>
@@ -247,55 +247,18 @@ function TimeTable() {
                   </thead>
                   <tbody>
                     {/*City 01 Table Data */}
-                    {[
-                      {
-                        id: 1,
-                        turnNo: 2,
-                        departureTime: "9.00am",
-                        arrivalTime: "10.30pm"
-                      },
-                      {
-                        id: 2,
-                        turnNo: 4,
-                        departureTime: "11.00am",
-                        arrivalTime: "1.00pm"
-                      },
-                      {
-                        id: 3,
-                        name: "Magic Mouse 2",
-                        color: "Black",
-                        category: "Accessories"
-                      },
-                      {
-                        id: 4,
-                        name: "Apple Watch",
-                        color: "Silver",
-                        category: "Accessories"
-                      },
-                      {
-                        id: 5,
-                        name: "iPad",
-                        color: "Gold",
-                        category: "Tablet"
-                      },
-                      {
-                        id: 6,
-                        name: 'Apple iMac 27"',
-                        color: "Silver",
-                        category: "PC Desktop"
-                      },
-                    ].map((city1) => (
-                      <tr key={city1.id} className="bg-white/[.6] border-b hover:bg-gray-50">
+                    {viewOutgoingTurntableList.map((outList) => (
+                      <tr key={outList.id} className="bg-white/[.6] border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
-                            <label htmlFor={`checkbox-table-search-${city1.id}`} className="sr-only">checkbox</label>
+                            <label htmlFor={`checkbox-table-search-${outList.id}`} className="sr-only">checkbox</label>
                           </div>
                         </td>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                          {city1.turnNo}
+                          {outList.turnNo}
                         </th>
-                        <td className="px-6 py-4">{city1.arrivalTime}</td>
-                        <td className="px-6 py-4">{city1.departureTime}</td>
+                        <td className="px-6 py-4">{outList.origin}</td>
+                        <td className="px-6 py-4">{outList.departure}</td>
                         <td className="px-6 py-4">
                           <div className="text-center">
                             <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10"
@@ -333,55 +296,18 @@ function TimeTable() {
                   </thead>
                   <tbody>
                     {/* City 02 Table Data */}
-                    {[
-                      {
-                        id: 1,
-                        turnNo: 2,
-                        departureTime: "3.00am",
-                        arrivalTime: "11.50pm"
-                      },
-                      {
-                        id: 2,
-                        turnNo: 4,
-                        departureTime: "3.00am",
-                        arrivalTime: "4.00pm"
-                      },
-                      {
-                        id: 9,
-                        name: "Logitech Mouse",
-                        color: "White",
-                        category: "Accessories"
-                      },
-                      {
-                        id: 10,
-                        name: "Samsung Galaxy Tab",
-                        color: "Black",
-                        category: "Tablet"
-                      },
-                      {
-                        id: 11,
-                        name: "HP Envy",
-                        color: "Silver",
-                        category: "Laptop"
-                      },
-                      {
-                        id: 12,
-                        name: 'Asus ZenBook 14"',
-                        color: "Blue",
-                        category: "Laptop"
-                      },
-                    ].map((city2) => (
-                      <tr key={city2.id} className="bg-white/[.6] border-b hover:bg-gray-50">
+                    {viewIncomingTurntableList.map((inList) => (
+                      <tr key={inList.id} className="bg-white/[.6] border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
-                            <label htmlFor={`checkbox-table-search-${city2.id}`} className="sr-only">checkbox</label>
+                            <label htmlFor={`checkbox-table-search-${inList.id}`} className="sr-only">checkbox</label>
                           </div>
                         </td>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                          {city2.turnNo}
+                          {inList.turnNo}
                         </th>
-                        <td className="px-6 py-4">{city2.arrivalTime}</td>
-                        <td className="px-6 py-4">{city2.departureTime}</td>
+                        <td className="px-6 py-4">{inList.origin}</td>
+                        <td className="px-6 py-4">{inList.departure}</td>
                         <td className="px-6 py-4">
                           <div className="text-center">
                             <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10"
