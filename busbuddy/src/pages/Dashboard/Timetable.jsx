@@ -110,8 +110,7 @@ function TimeTable() {
         <div>
           <div className="bg-white/[.20] p-8 ml-12 rounded-lg">
       <h1 className="text-2xl font-bold">Timetable for Colombo-Kandy-Express(001)</h1>
-            <div className="p-4 w-full bg-transparent flex justify-center">
-              {/*searchbar*/}
+            {/* <div className="p-4 w-full bg-transparent flex justify-center">
               <label htmlFor="table-search" className="sr-only">Search</label>
               <div className="relative mt-1 text-center">
                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -138,7 +137,7 @@ function TimeTable() {
                   placeholder="Search for items"
                   />
               </div>
-            </div>
+            </div> */}
 
 
 
@@ -353,9 +352,29 @@ function TimeTable() {
       ) : (
 
 
-      <div className="bg-white/[.20] p-8 ml-12 rounded-lg">       {/*Route list section rendering*/}
+      <div className="bg-white/[.20] p-8 ml-12 rounded-lg">      
+    <div className="flex flex-row justify-around mx-32 -mb-8">
+  
+  <div className="container flex flex-col items-start"> {/* Align items to the left */}
+    <h1 className="text-2xl font-bold mb-1">Timetable</h1> {/* Adjusted margin */}
+    <p className="text-gray-700">Manage your timetable with this easy interface</p>
+  </div>
+
+  {/* <div className="flex flex-row justify-center items-center"> 
+    <button 
+      type="button" 
+      className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+      
+    >
+      <i className="fi fi-rs-price-add mr-2"></i> 
+      Add Price
+    </button>
+  </div> */}
+</div>
+
+
     <div className="flex flex-row justify-around">
-    <div className="p-4 bg-transparent flex justify-center"> {/*searchbar*/}
+    {/* <div className="p-4 bg-transparent flex justify-center"> 
           <label htmlFor="table-search" className="sr-only">
             Search
           </label>
@@ -384,7 +403,7 @@ function TimeTable() {
               placeholder="Search for items"
               />
           </div>
-    </div>
+    </div> */}
 
       {/* <!--add new route button is unnecessary for this tab-->
     <div className="flex flex-row justify-center items-center">
@@ -400,6 +419,7 @@ function TimeTable() {
         */}
 
   </div>
+
 
   
 
