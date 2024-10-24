@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 function TimeTable() {
 
@@ -7,9 +8,32 @@ function TimeTable() {
 
   const [isAddTurnForCity1ModalOpen, setAddTurnForCity1ModalOpen] = useState(false); //state for add turn for city table's modal
   const [isEditTurnForCity1ModalOpen, setEditTurnForCity1ModalOpen] = useState(false); //state for edit turn for city1 table'smodal
-
   const [isAddTurnForCity2ModalOpen, setAddTurnForCity2ModalOpen] = useState(false); //state for add turn for city2 table'smodal
   const [isEditTurnForCity2ModalOpen, setEditTurnForCity2ModalOpen] = useState(false); //state for edit turn for city2 table'smodal
+
+  const [selectedRouteId, setSelectedRouteId] = useState(null);
+  const [viewRouteList, setViewRouteList] = useState([]); // Correct initialization as an array
+  const [addRoute, setAddRoute] = useState({
+    id: null,
+    name: '',
+    routeFrom: '',
+    routeTo: ''
+  });
+
+  useEffect(() => {
+    loadRouteList();
+  }, []);
+
+  // Fetch route list from API
+  const loadRouteList = async () => {
+    try {
+      const result = await axios.get('http://localhost:8081/api/schemas');
+      console.log(result.data);
+      setViewRouteList(result.data);
+    } catch (error) {
+      console.error('Error fetching all routes data hmm:', error);
+    }
+  }; 
 
   const [turnForCity1Info, setTurnForCity1Info] = useState({     // turn info state for city one table
     id: 1,
@@ -141,7 +165,6 @@ function TimeTable() {
               </button>
 
             </div>
-
 
               <div>
                 <table className="w-full text-sm text-left text-gray-500">
