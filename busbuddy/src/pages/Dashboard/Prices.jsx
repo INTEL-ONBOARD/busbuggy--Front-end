@@ -50,11 +50,11 @@ function Prices() {
     }
   };
   
-  // Loading price data into edit modal's textboxes
+  // Loading price data into edit modal's textboxes when table row is clicked
   const loadEditPrices = async (priceId) => {
     try {
       const result = await axios.get(`http://localhost:8081/api/prices/${priceId}`);
-      console.log(result.data)
+      console.log(result.data);
       setEditPrice(result.data);
       setSelectedPriceId(priceId);
       setEditPriceModalOpen(true);

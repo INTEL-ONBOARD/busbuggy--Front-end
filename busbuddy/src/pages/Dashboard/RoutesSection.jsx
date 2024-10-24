@@ -126,6 +126,22 @@ const RoutesSection = () => {
       routeFrom: '',
       routeTo: ''
     });
+    setAddFareStage({
+      id: '',
+      schemaMap: {
+          id: '',
+      },
+      milestone: '',
+      info: ''
+    });
+    setEditFareStage({
+      id: '',
+      schemaMap: {
+          id: '',
+      },
+      milestone: '',
+      info: ''
+    });
   };
 
   //to be removed
@@ -136,17 +152,11 @@ const RoutesSection = () => {
   };
 
   //to be removed
-  const handleCreateFareStageInfo = () => {         // Handler to save created info
-    console.log('Created new fare stage info:', fareStageInfo);
-    setAddFareStageModalOpen(false); // Close modal after creation
-  };
-
-  //to be removed
   const handleFareStageUpdateInfo = () => {         // Handler to save updated info
     console.log('Updated new fare stage info:', fareStageInfo);
     setEditFareStageModalOpen(false); // Close modal after update
   };
-
+  //to be removed
   const handleClearFareStageInfo = () => {        // Handler to clear fare stage input form
     setFareStageInfo({
       fareStage: 0,
@@ -162,7 +172,7 @@ const RoutesSection = () => {
   //triggers when view button was clicked(this handle might be useful for crud in fareStage)
   const handleFareStageLoading = (currRouteName, currRouteId) => {
     //console.log("ready to fetch from routeName: "+routeName);
-    console.log(currRouteId+" YESSSS");
+    //console.log(currRouteId+" YESSSS");
     setSelectedRouteId(currRouteId); //for crud operations occured in fareStage section
     setSelectedRouteName(currRouteName); //for crud operations occured in fareStage section
     loadFareStageList(currRouteName);
@@ -170,6 +180,7 @@ const RoutesSection = () => {
   }
 
   const [selectedRouteName, setSelectedRouteName] = useState([]); // For loading schemaMap id for cruds for loadFareStageList parameters
+  const [selectedFareStageId, setSelectedFareStageId] = useState(null); //to load fareStage by id to edit textboxes
   const [viewFareStageList, setViewFareStageList] = useState([]); // For loading fareStage data into the table
 
   // Fetchs farestage/schema list by routeName from API under handleFareStageLoading method
@@ -188,8 +199,16 @@ const RoutesSection = () => {
     }
   };
 
-  //geId, setSelectedFareStageId] = useState(null);
-  const [addFareStage, setAddFareStage] = useState({     // Price info state
+  const [addFareStage, setAddFareStage] = useState({     // add farestage input state
+    id: null,
+    schemaMap: {
+        id: null,
+    },
+    milestone: "",
+    info: ""
+  });
+
+  const [editFareStage, setEditFareStage] = useState({     // edit farestage input state
     id: null,
     schemaMap: {
         id: null,
@@ -203,24 +222,67 @@ const RoutesSection = () => {
     try {
       // Update schemaMap id with selectedRouteId
       const newFareStage = { ...addFareStage, schemaMap: { id: selectedRouteId } };
-      console.log("new fare stage added:", newFareStage);
-      
       await axios.post('http://localhost:8081/api/maps', newFareStage);
       setAddFareStageModalOpen(false);
       loadFareStageList(selectedRouteName); // Reload fare stages after addition
-      handleClearFareStageInfo();
+      handleClearInfo();
     } catch (error) {
       console.error('Error adding fare stages: ', error);
     }
   };
+
+
+  // Loading price data into edit modal's textboxes when table row is clicked
+  const loadEditFareStages = async (fareStageId) => {
+    try {
+      const result = await axios.get(`http://localhost:8081/api/maps/${fareStageId}`);
+      console.log(result.data);
+      setEditFareStage(result.data);
+      setSelectedFareStageId(fareStageId);
+      setEditFareStageModalOpen(true);
+    } catch (error) {
+      console.error('Error loading fareStage data for edit:', error);
+    }
+  };
+
+    //updating the finilazed edit fareStage data via the api
+    const editFareStages = async (e) => {
+      e.preventDefault();
+      try {
+        // Update schemaMap id with selectedRouteId
+        const newFareStage = { ...editFareStage, schemaMap: { id: selectedRouteId } };
+        await axios.put(`http://localhost:8081/api/maps/${selectedFareStageId}`, newFareStage);
+        setEditFareStageModalOpen(false);
+        loadFareStageList(selectedRouteName); // Reload fare stages after editing
+      } catch (error) {
+        console.error('Error updating price:', error);
+      }
+    };
+
+    const deleteFareStage = async (fareStageId) => {
+      try {
+        console.log("fareStage Deletion target: "+fareStageId);
+        await axios.delete(`http://localhost:8081/api/maps/${fareStageId}`);
+        loadFareStageList(selectedRouteName); // Reload fare stages after deleting
+      } catch (error) {
+        console.error('Error deleting price:', error);
+      }
+    };
+
+
+
     // Handler for add fareStage info form changes
     const handleAddFareStageInputChange = (e) => {
       console.log("add inputchange triggered");
       const { name, value} = e.target;
       setAddFareStage({ ...addFareStage, [name]: value });
     };
-
-
+    // Handler for add fareStage info form changes
+    const handleEditFareStageInputChange = (e) => {
+      console.log("edit inputchange triggered");
+      const { name, value} = e.target;
+      setEditFareStage({ ...editFareStage, [name]: value });
+    };
 
   return (
     <>
@@ -330,13 +392,15 @@ const RoutesSection = () => {
               <td className="px-6 py-4">
                 <div className="text-center">
                   <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10" 
-                     onClick={() => setEditFareStageModalOpen(true)}>
+                     onClick={() => loadEditFareStages(fareStage.id)}>
                   </i>
                 </div>
               </td>
               <td>
                 <div className="text-center">
-                  <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"></i>
+                  <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"
+                    onClick={() => deleteFareStage(fareStage.id)}
+                  ></i>
                 </div>
               </td>
 
@@ -678,9 +742,19 @@ const RoutesSection = () => {
           <button 
               type="button" 
               className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
-              onClick={handleClearFareStageInfo}
+              onClick={handleClearInfo}
               >
                 Clear All
+          </button>
+          <button
+              type="button"
+              className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-red-400/80 rounded-md border border-red-400 hover:text-white hover:border-red-500 focus:outline-none"
+              onClick={() => {
+                setAddFareStageModalOpen(false);
+                handleClearInfo();
+              }}
+          >
+              Cancel
           </button>
             </div>
       </form>
@@ -700,50 +774,42 @@ const RoutesSection = () => {
         <label className="block text-white mb-1">Fare Stage</label>
         <input
           type="text"
-          name="fareStage"  
+          name="milestone"
           className="w-full p-2 rounded-md border-none focus:outline-none"
           placeholder="Enter fare stage"
-          value={fareStageInfo.fareStage}
-          onChange={handleFareStageInputChange}
+          value={editFareStage.milestone}
+          onChange={handleEditFareStageInputChange}
         />
 
         <label className="block text-white mb-1">Stage City</label>
         <input
           type="text"
-          name="city"  
+          name="info"  
           className="w-full p-2 rounded-md border-none focus:outline-none"
-          placeholder="Enter current name"
-          value={fareStageInfo.city}
-          onChange={handleFareStageInputChange}
-        />
-
-        <label className="block text-white mb-1">Stage price</label>
-        <input
-          type="text"
-          name="price"  
-          className="w-full p-2 rounded-md border-none focus:outline-none"
-          placeholder="Enter new price"
-          value={fareStageInfo.price}
-          onChange={handleFareStageInputChange}
+          placeholder="Enter city name"
+          value={editFareStage.info}
+          onChange={handleEditFareStageInputChange}
         />
 
         <div className="flex flex-row text-center m-6">
           <button 
             type="button" 
             className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-            onClick={handleFareStageUpdateInfo}
+            onClick={editFareStages}
           >
             <i className="fi fi-rs-user-add mr-6"></i>
             Edit Price
           </button>
-          <button 
-            type="button" 
-            className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
-            onClick={handleClearFareStageInfo}
-          >
-            <i className="fi fi-rs-user-add mr-6"></i>
-            Clear All
-          </button>
+          <button
+          type="button"
+          className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-red-400/80 rounded-md border border-red-400 hover:text-white hover:border-red-500 focus:outline-none"
+          onClick={() => {
+            setEditFareStageModalOpen(false);
+            handleClearInfo();
+          }}
+        >
+          Cancel
+        </button>
         </div>
       </form>
     </div>
