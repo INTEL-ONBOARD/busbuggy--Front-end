@@ -728,15 +728,15 @@ const RoutesSection = () => {
             Edit Price
           </button>
           <button
-          type="button"
-          className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-red-400/80 rounded-md border border-red-400 hover:text-white hover:border-red-500 focus:outline-none"
-          onClick={() => {
-            setEditFareStageModalOpen(false);
-            handleClearInfo();
-          }}
-        >
-          Cancel
-        </button>
+            type="button"
+            className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-red-400/80 rounded-md border border-red-400 hover:text-white hover:border-red-500 focus:outline-none"
+            onClick={() => {
+              setEditFareStageModalOpen(false);
+              handleClearInfo();
+            }}
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>

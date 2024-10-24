@@ -115,23 +115,39 @@ function TimeTable() {
     },
     schemaMapName: null
   });
-/*
+ //useState for editTableIncoming inputs
   const [editTurntableIncoming, setEditTurntableIncoming] = useState({
     id: null,
-    turnNo: 1,
+    turnNo: '',
     origin: '',
     departure: '',
     info: '',
     type: '',
     schemaMap: {
-        id: null,//a val is needed
+        id: null, //a val is needed(to be assigned in api edit method)
         name: null,
         routeFrom: null,
         routeTo: null
     },
     schemaMapName: null
   });
-*/
+   //useState for editTableOutgoing inputs
+   const [editTurntableOutgoing, setEditTurntableOutgoing] = useState({
+    id: null,
+    turnNo: '',
+    origin: '',
+    departure: '',
+    info: '',
+    type: '',
+    schemaMap: {
+        id: null, //a val is needed(to be assigned in api edit method)
+        name: null,
+        routeFrom: null,
+        routeTo: null
+    },
+    schemaMapName: null
+  });
+
 
   // Add a new turntableIncoming
   const addTurnTableIncomings = async () => {
@@ -174,6 +190,46 @@ function TimeTable() {
   };
 
 
+  // Loading turntableIncoming data into edit modal's textboxes when table row edit is clicked
+  const loadEditTurntableIncomings = async (turntableId) => {
+    try {
+      const result = await axios.get(`http://localhost:8081/api/turns/${turntableId}`);
+      console.log(result.data);
+      setEditTurntableIncoming(result.data);
+      setSelectedTurntableId(turntableId);
+      setEditTurnForCity1ModalOpen(true);
+    } catch (error) {
+      console.error('Error loading turntable data incomings for edit:', error);
+    }
+  };
+      //updating the finilazed edit fareStage data via the api
+    const editTurntableIncomings = async (e) => {
+      e.preventDefault();
+      try {
+
+      // Update schemaMap id with selectedRouteId
+      const newTurntableIncoming = { 
+        ...editTurntableIncoming, 
+        schemaMap: { id: selectedRouteId },  // Assign schemaMap id
+        type: "return"                      // Assign type as "return"
+      };
+      console.log("data with fk");
+      console.log(newTurntableIncoming);
+      await axios.put(`http://localhost:8081/api/turns/${selectedTurntableId}`, newTurntableIncoming);
+      /*
+        // Update schemaMap id with selectedRouteId
+        const newFareStage = { ...editFareStage, schemaMap: { id: selectedRouteId } };
+        await axios.put(`http://localhost:8081/api/maps/${selectedFareStageId}`, newFareStage);
+      */
+        setEditTurnForCity1ModalOpen(false);
+        loadFareStageList(selectedRouteName); // Reload fare stages after editing
+      } catch (error) {
+        console.error('Error updating price:', error);
+      }
+    };
+
+
+
 
   // Handler for add route info form changes
   const handleAddTurntableIncomingInputChange = (e) => {
@@ -187,15 +243,22 @@ function TimeTable() {
     const { name, value} = e.target;
     setAddTurntableOutgoing({ ...addTurnTableOutgoing, [name]: value });
   };
-  /*
+  
   // Handler for edit route info form changes
   const handleEditTurntableIncomingInputChange = (e) => {
+    console.log("edit incoming inputchange tirggered");
     const { name, value} = e.target;
     setEditTurntableIncoming({ ...editTurntableIncoming, [name]: value });
   };
-  */
+  // Handler for edit route info form changes
+  const handleEditTurntableOutgoingInputChange = (e) => {
+    console.log("edit outgoing inputchange tirggered");
+    const { name, value} = e.target;
+    setEditTurntableOutgoing({ ...editTurntableOutgoing, [name]: value });
+  };
+  
 
-  const handleClearInfo = () => {        // Handler to clear route info form for both add & edit
+  const handleClearInfo = () => {        // Handler to clear route info form for both add & edit in both tables
     setAddTurntableIncoming({
       id: '',
       turnNo: '',
@@ -226,8 +289,8 @@ function TimeTable() {
       },
       schemaMapName: ''
     });
-    /*
-    setAddTurntableIncoming({
+
+    setEditTurntableIncoming({
       id: '',
       turnNo: '',
       origin: '',
@@ -241,8 +304,26 @@ function TimeTable() {
           routeTo: ''
       },
       schemaMapName: ''
-    });*/
+    });
+    setEditTurntableOutgoing({
+      id: '',
+      turnNo: '',
+      origin: '',
+      departure: '',
+      info: '',
+      type: '',
+      schemaMap: {
+          id: '',
+          name: '',
+          routeFrom: '',
+          routeTo: ''
+      },
+      schemaMapName: ''
+    });
   };
+
+
+
 
 
 
@@ -268,32 +349,6 @@ function TimeTable() {
     arrivalTime: "4.40pm"
   });
 
-  // Handler for turn for city 1 info form changes
-  const handleTurnForCity1InputChange = (e) => {
-    const { name, value} = e.target;
-    console.log("is working");
-    setTurnForCity1Info({ ...turnForCity1Info, [name]: value });
-  };
-  
-  const handleCreateTurnForCity1Info = () => {         // Handler to save created info for add turn for city one
-    console.log('Created new turn info for city1 table:', turnForCity1Info);
-    setAddTurnForCity1ModalOpen(false); // Close modal after creation
-  };
-
-  const handleUpdateTurnForCity1Info = () => {         // Handler to save updated info
-    console.log('Updated turn for city 1 info:', turnForCity1Info);
-    setEditTurnForCity1ModalOpen(false); // Close modal after update
-  };
-
-  const handleTurnForCity1ClearInfo = () => {        // Handler to clear (add & edit) turn for city one table info form
-    console.log("clear handle event triggered");
-    setTurnForCity1Info({
-      id: 0,
-      turnNo: 0,
-      departureTime: "-",
-      arrivalTime: "-"
-    });
-  };
 
     // Handler for turn for city 1 info form changes
     const handleTurnForCity2InputChange = (e) => {
@@ -302,10 +357,6 @@ function TimeTable() {
       setTurnForCity2Info({ ...turnForCity2Info, [name]: value });
     };
     
-    const handleCreateTurnForCity2Info = () => {         // Handler to save created info for add turn for city two
-      console.log('Created new turn info for city2 table:', turnForCity2Info);
-      setAddTurnForCity2ModalOpen(false); // Close modal after creation
-    };
   
     const handleUpdateTurnForCity2Info = () => {         // Handler to save updated info
       console.log('Updated turn for city 2 info:', turnForCity2Info);
@@ -401,7 +452,7 @@ function TimeTable() {
                   </thead>
                   <tbody>
                     {/*City 01 Table Data */}
-                    {viewOutgoingTurntableList.map((outList) => (
+                    {viewIncomingTurntableList.map((outList) => (
                       <tr key={outList.id} className="bg-white/[.6] border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
@@ -416,7 +467,7 @@ function TimeTable() {
                         <td className="px-6 py-4">
                           <div className="text-center">
                             <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10"
-                              onClick={() => setEditTurnForCity1ModalOpen(true)}
+                              onClick={() => loadEditTurntableIncomings(outList.id)}
                             ></i>
                           </div>
                         </td>
@@ -450,7 +501,7 @@ function TimeTable() {
                   </thead>
                   <tbody>
                     {/* City 02 Table Data */}
-                    {viewIncomingTurntableList.map((inList) => (
+                    {viewOutgoingTurntableList.map((inList) => (
                       <tr key={inList.id} className="bg-white/[.6] border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
@@ -465,7 +516,7 @@ function TimeTable() {
                         <td className="px-6 py-4">
                           <div className="text-center">
                             <i className="fi fi-rs-edit hover:text-blue-600 hover:font-bold hover:rounded-full w-10"
-                            onClick={() => setEditTurnForCity2ModalOpen(true)}></i>
+                            onClick={() => loadEditTurntableOutgoings(outList.id)}></i>
                           </div>
                         </td>
                         <td>
@@ -731,10 +782,10 @@ function TimeTable() {
     <Modal 
       isOpen={isEditTurnForCity1ModalOpen}
       onRequestClose={() => setEditTurnForCity1ModalOpen(false)}
-      contentLabel="Edit Turn"
+      contentLabel="Edit Turns for Incoming"
       className="flex rounded w-3/4 mx-auto mt-20 flex-col justify-center items-center"
     >
-      <h2 className="text-xl font-semibold m-6">Edit Turn</h2>
+      <h2 className="text-xl font-semibold m-6">Edit Turns for Incoming</h2>
       <div className="bg-black/[.40] p-8 w-1/3 rounded-md">
         <form action="">
           <label className="block text-white mb-1">Turn Number</label>
@@ -743,35 +794,35 @@ function TimeTable() {
             name="turnNo"  
             className="w-full p-2 rounded-md border-none focus:outline-none"
             placeholder="Enter turn number"
-            value={turnForCity1Info.turnNo}
-            onChange={handleTurnForCity1InputChange}
+            value={editTurntableIncoming.turnNo}
+            onChange={handleEditTurntableIncomingInputChange}
           />
 
           <label className="block text-white mb-1">Arrival Time</label>
           <input
             type="text"
-            name="arrivalTime"  
+            name="origin"  
             className="w-full p-2 rounded-md border-none focus:outline-none"
             placeholder="Enter arrival time"
-            value={turnForCity1Info.arrivalTime}
-            onChange={handleTurnForCity1InputChange}
+            value={editTurntableIncoming.origin}
+            onChange={handleEditTurntableIncomingInputChange}
           />
 
           <label className="block text-white mb-1">Departure Time</label>
           <input
             type="text"
-            name="departureTime"
+            name="departure"
             className="w-full p-2 rounded-md border-none focus:outline-none"
             placeholder="Enter departure time"
-            value={turnForCity1Info.departureTime}
-            onChange={handleTurnForCity1InputChange}
+            value={editTurntableIncoming.departure}
+            onChange={handleEditTurntableIncomingInputChange}
           />
           {/*buttons */}
           <div className="flex flex-row text-center m-6">
             <button 
               type="button" 
               className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-              onClick={handleUpdateTurnForCity1Info}
+              onClick={editTurntableIncomings}
             >
               <i className="fi fi-rs-user-add mr-6"></i>
               Edit Turn
@@ -779,10 +830,20 @@ function TimeTable() {
             <button 
               type="button" 
               className="mt-3 h-10 px-4 py-2 m-1 text-gray-600 transition-colors duration-300 transform bg-white rounded-md border border-gray-400 hover:text-black hover:border-gray-600 focus:outline-none"
-              onClick={handleTurnForCity1ClearInfo}
+              onClick={handleClearInfo}
             >
               <i className="fi fi-rs-user-add mr-6"></i>
               Clear All
+            </button>
+            <button
+              type="button"
+              className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-red-400/80 rounded-md border border-red-400 hover:text-white hover:border-red-500 focus:outline-none"
+              onClick={() => {
+                setEditTurnForCity1ModalOpen(false);
+                handleClearInfo();
+              }}
+            >
+              Cancel
             </button>
           </div>
         </form>
@@ -791,7 +852,7 @@ function TimeTable() {
 
 
     
-      {/*------------------add turn for city 01 table modal*/}
+      {/*------add turn for city 02 table modal*/}
       <Modal 
       isOpen={isAddTurnForCity2ModalOpen}
       onRequestClose={() => setAddTurnForCity2ModalOpen(false)}
