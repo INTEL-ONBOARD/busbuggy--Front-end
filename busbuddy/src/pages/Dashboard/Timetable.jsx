@@ -258,6 +258,26 @@ function TimeTable() {
         }
       };
 
+      const deleteTurntableIncomings = async (turntableId) => {
+        try {
+          console.log("turntableincoming Deletion target: "+turntableId);
+          await axios.delete(`http://localhost:8081/api/turns/${turntableId}`);
+          loadTurntableList(selectedRouteId); // Reload fare stages after deleting
+        } catch (error) {
+          console.error('Error deleting incomingturntable:', error);
+        }
+      };
+
+      const deleteTurntableOutgoings = async (turntableId) => {
+        try {
+          console.log("turntableoutgoing Deletion target: "+turntableId);
+          await axios.delete(`http://localhost:8081/api/turns/${turntableId}`);
+          loadTurntableList(selectedRouteId); // Reload fare stages after deleting
+        } catch (error) {
+          console.error('Error deleting incomingturntable:', error);
+        }
+      };
+
 
 
   // Handler for add route info form changes
@@ -502,7 +522,9 @@ function TimeTable() {
                         </td>
                         <td>
                           <div className="text-center">
-                            <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"></i>
+                            <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"
+                              onClick={() => deleteTurntableIncomings(outList.id)}
+                            ></i>
                           </div>
                         </td>
                       </tr>
@@ -550,7 +572,9 @@ function TimeTable() {
                         </td>
                         <td>
                           <div className="text-center">
-                            <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"></i>
+                            <i className="fi fi-rs-trash hover:text-red-600 hover:font-bold hover:rounded-full w-10"
+                              onClick={() => deleteTurntableOutgoings(inList.id)}
+                            ></i>
                           </div>
                         </td>
                       </tr>
