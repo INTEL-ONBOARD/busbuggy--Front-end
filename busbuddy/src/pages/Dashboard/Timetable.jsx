@@ -204,29 +204,28 @@ function TimeTable() {
 
 
 
-            <div className="grid grid-cols-2 gap-4 relative container mx-auto overflow-x-auto sm:rounded-lg">
+            <div className="grid grid-cols-2 gap-4 relative container mx-auto overflow-x-auto sm:rounded-lg content-start	">
               {/*Table for City 01*/}
 
               <div className="flex flex-row justify-center items-center gap-20 mb-2 col-span-2"> {/* Add turn for city 1 Button */}
-              <button 
-                type="button" 
-                className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-                onClick={() => setAddTurnForCity1ModalOpen(true)} //opens add modal for route description
-                >
-                <i className="fi fi-rs-price-add mr-6"></i>
-                Add Turn for city o1
-              </button>
+                <button 
+                  type="button" 
+                  className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+                  onClick={() => setAddTurnForCity1ModalOpen(true)} //opens add modal for route description
+                  >
+                  <i className="fi fi-rs-price-add mr-6"></i>
+                  Add Turn for city o1
+                </button>
 
-              <button 
-                type="button" 
-                className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-                onClick={() => setAddTurnForCity2ModalOpen(true)} //opens add modal for route description
-                >
-                <i className="fi fi-rs-price-add mr-6"></i>
-                Add Turn for city o2
-              </button>
-
-            </div>
+                <button 
+                  type="button" 
+                  className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+                  onClick={() => setAddTurnForCity2ModalOpen(true)} //opens add modal for route description
+                  >
+                  <i className="fi fi-rs-price-add mr-6"></i>
+                  Add Turn for city o2
+                </button>
+              </div>
 
               <div>
                 <table className="w-full text-sm text-left text-gray-500">
