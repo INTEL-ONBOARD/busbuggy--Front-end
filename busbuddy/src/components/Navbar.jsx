@@ -60,7 +60,7 @@ function Navbar() {
 
           {/* Conditional rendering of Login/Logout buttons */}
           {isLoggedIn ? (
-            <div className="flex md:ml-auto">
+            <div className="flex md:ml-auto z-50">
               <button 
                 className="my-2 inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-orange-400 bg-white rounded-md border border-white hover:bg-transparent hover:border-white hover:text-white focus:bg-transparent focus:text-white md:mx-2 md:my-0"
                 onClick={() => SetIsLogoutConfModalOpen(true)}

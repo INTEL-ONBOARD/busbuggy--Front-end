@@ -263,51 +263,27 @@ const RoutesSection = () => {
     {isFareStageSectionOpen ? 
     (//fare stage section
       <div className="bg-white/[.20] p-8 ml-12 rounded-lg">{/*Fare Stage/Route description rendering*/}
+    <div className="flex flex-row justify-around  mx-52 -mb-8">
+   
 
-      <h1 className="text-2xl font-bold">Colombo-Kandy-Express(001)</h1>
+    <div className="container flex flex-col items-start"> {/* Align items to the left */}
+          <h1 className="text-2xl font-bold mb-1">Bus Fare Amendment (Interterms)</h1> {/* Adjusted margin */}
+          <p className="text-gray-700 mb-6">Average bus fare charging cycle</p>
+        </div>
 
-    <div className="flex flex-row justify-around">
-    <div className="p-4 bg-transparent flex justify-center"> {/*searchbar*/}
-          <label htmlFor="table-search" className="sr-only">
-            Search
-          </label>
-          <div className="relative mt-1 text-center ">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg
-                className="w-4 h-4 text-gray-500 "
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-                >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-              </svg>
-            </div>
-            <input
-              type="text"
-              id="table-search"
-              className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-              placeholder="Search for opportunities"
-              />
-          </div>
+
+      <div className="flex flex-row justify-center items-center"> {/* Add Price Button */}
+        <button 
+          type="button" 
+          className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
+          onClick={() => setAddFareStageModalOpen(true)} //opens add modal for route description
+          >
+          <i className="fi fi-rs-price-add mr-6"></i>
+          Add Fare Stage
+        </button>
+      </div>
+
     </div>
-    <div className="flex flex-row justify-center items-center"> {/* Add Price Button */}
-      <button 
-        type="button" 
-        className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-        onClick={() => setAddFareStageModalOpen(true)} //opens add modal for route description
-        >
-        <i className="fi fi-rs-price-add mr-6"></i>
-        Add Fare Stage
-      </button>
-    </div>
-  </div>
 
 
   <div className="flex gap-10 relative container mx-auto overflow-x-auto rounded-lg  sm:rounded-lg justify-around">
@@ -398,38 +374,16 @@ const RoutesSection = () => {
     
     ) : (
       //routeList section
-<div className="bg-white/[.20] p-8 ml-12 rounded-lg">       {/*Route list section rendering*/}
-    <div className="flex flex-row justify-around">
-    <div className="p-4 bg-transparent flex justify-center"> {/*searchbar*/}
-          <label htmlFor="table-search" className="sr-only">
-            Search
-          </label>
-          <div className="relative mt-1 text-center ">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg
-                className="w-4 h-4 text-gray-500 "
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-                >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-              </svg>
-            </div>
-            <input
-              type="text"
-              id="table-search"
-              className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-              placeholder="Search for items"
-              />
-          </div>
-    </div>
+  <div className="bg-white/[.20] p-8 ml-12 rounded-lg">      
+    <div className="flex flex-row justify-around mx-52 -mb-8">
+
+    <div className="container flex flex-col items-start"> {/* Align items to the left */}
+          <h1 className="text-2xl font-bold mb-1">Manage routes</h1> {/* Adjusted margin */}
+          <p className="text-gray-700 mb-6">Average bus fare charging cycle</p>
+        </div>
+
+
+
     <div className="flex flex-row justify-center items-center"> {/* Add New Route Button */}
       <button 
         type="button" 
