@@ -94,15 +94,7 @@ const RoutesSection = () => {
     }
   };
 
-  //
-  const [routeInfo, setRouteInfo] = useState({     // Price info state
-    id: 10,
-    name: '012',
-    routeFrom: "town1",
-    routeTo: "town2"
-  });
-
-  //
+  // to be removed
   const [fareStageInfo, setFareStageInfo] = useState({     // Price info state
     id: 2,
     fareStage: 20,
@@ -112,7 +104,6 @@ const RoutesSection = () => {
 
   // Handler for add route info form changes
   const handleAddRouteInputChange = (e) => {
-    console.log("route inputchange triggered");
     const { name, value} = e.target;
     setAddRoute({ ...addRoute, [name]: value });
   };
@@ -123,7 +114,6 @@ const RoutesSection = () => {
   };
 
   const handleClearInfo = () => {        // Handler to clear route info form for both add & edit
-    console.log("clear info triggered");
     setAddRoute({
       id: '',
       name: '',
@@ -138,24 +128,26 @@ const RoutesSection = () => {
     });
   };
 
+  //to be removed
   // Handler for edit fare stage input form changes
   const handleFareStageInputChange = (e) => {
     const { name, value} = e.target;
     setFareStageInfo({ ...fareStageInfo, [name]: value });
   };
 
+  //to be removed
   const handleCreateFareStageInfo = () => {         // Handler to save created info
     console.log('Created new fare stage info:', fareStageInfo);
     setAddFareStageModalOpen(false); // Close modal after creation
   };
 
+  //to be removed
   const handleFareStageUpdateInfo = () => {         // Handler to save updated info
     console.log('Updated new fare stage info:', fareStageInfo);
     setEditFareStageModalOpen(false); // Close modal after update
   };
 
   const handleClearFareStageInfo = () => {        // Handler to clear fare stage input form
-    console.log("textboxes should be cleared");
     setFareStageInfo({
       fareStage: 0,
       price: 0.00,
@@ -163,24 +155,29 @@ const RoutesSection = () => {
     });
   };
 
-  //triggers when view button was clicked
-  const handleFareStageLoading = (routeName) => {
-    console.log("ready to fetch from routeName: "+routeName);
-    loadFareStageList(routeName);
+
+//---------------------------------------------------------------
+
+
+  //triggers when view button was clicked(this handle might be useful for crud in fareStage)
+  const handleFareStageLoading = (currRouteName, currRouteId) => {
+    //console.log("ready to fetch from routeName: "+routeName);
+    console.log(currRouteId+" YESSSS");
+    setSelectedRouteId(currRouteId); //for crud operations occured in fareStage section
+    setSelectedRouteName(currRouteName); //for crud operations occured in fareStage section
+    loadFareStageList(currRouteName);
     setFareStageSectionOpen(true);
-    
   }
 
-  const [viewFareStageList, setViewFareStageList] = useState([]); // For loading price data into the table
+  const [selectedRouteName, setSelectedRouteName] = useState([]); // For loading schemaMap id for cruds for loadFareStageList parameters
+  const [viewFareStageList, setViewFareStageList] = useState([]); // For loading fareStage data into the table
 
   // Fetchs farestage/schema list by routeName from API under handleFareStageLoading method
   const loadFareStageList = async (routeName) => {
     try {
       const result = await axios.get('http://localhost:8081/api/maps');
-      console.log(result.data);//for testing
-      console.log(result.data[0].schemaMap.name); //for testing
-      setViewFareStageList(result.data);
-
+      //console.log(result.data);//for testing
+      //console.log(result.data[0].schemaMap.name); //for testing
     // Filter data based on routeName and schemaMap.name
     const filteredData = result.data.filter(item => item.schemaMap.name === routeName);
     console.log(filteredData); //for testing
@@ -190,6 +187,38 @@ const RoutesSection = () => {
       console.error('Error fetching all farestage data hmm: ', error);
     }
   };
+
+  //geId, setSelectedFareStageId] = useState(null);
+  const [addFareStage, setAddFareStage] = useState({     // Price info state
+    id: null,
+    schemaMap: {
+        id: null,
+    },
+    milestone: "",
+    info: ""
+  });
+
+  // Add a new fare stage
+  const addFareStages = async () => {
+    try {
+      // Update schemaMap id with selectedRouteId
+      const newFareStage = { ...addFareStage, schemaMap: { id: selectedRouteId } };
+      console.log("new fare stage added:", newFareStage);
+      
+      await axios.post('http://localhost:8081/api/maps', newFareStage);
+      setAddFareStageModalOpen(false);
+      loadFareStageList(selectedRouteName); // Reload fare stages after addition
+      handleClearFareStageInfo();
+    } catch (error) {
+      console.error('Error adding fare stages: ', error);
+    }
+  };
+    // Handler for add fareStage info form changes
+    const handleAddFareStageInputChange = (e) => {
+      console.log("add inputchange triggered");
+      const { name, value} = e.target;
+      setAddFareStage({ ...addFareStage, [name]: value });
+    };
 
 
 
@@ -260,7 +289,7 @@ const RoutesSection = () => {
               </div>
             </th>
             <th scope="col" className="px-6 py-3">
-              Fare Stage
+              Fare Stage No
             </th>
             <th scope="col" className="px-6 py-3">
               City
@@ -437,7 +466,7 @@ const RoutesSection = () => {
                   <i className="fi fi-rs-eye hover:text-orange-600 hover:font-bold hover:rounded-full w-10" 
                      onClick={() =>{ 
                       console.log(route.id);
-                      handleFareStageLoading(route.name);
+                      handleFareStageLoading(route.name, route.id);
                      }}>
                   </i>
                 </div>
@@ -621,32 +650,27 @@ const RoutesSection = () => {
       <label className="block text-white mb-1">Fare Stage No</label>
           <input
             type="text"
-            name="fareStage"
+            name="milestone"
             className="w-full p-2 rounded-md border-none focus:outline-none"
             placeholder="Enter fare stage No"
-            onChange={handleFareStageInputChange}
+            value={addFareStage.milestone}
+            onChange={handleAddFareStageInputChange}
             />
-          <label className="block text-white mb-1">Stage Price</label>
-          <input
-            type="text"
-            name="price"
-            className="w-full p-2 rounded-md border-none focus:outline-none"
-            placeholder="Enter stage price"
-            onChange={handleFareStageInputChange}
-            />
+
           <label className="block text-white mb-1">Stage City</label>
           <input
             type="text"
-            name="city"
+            name="info"
             className="w-full p-2 rounded-md border-none focus:outline-none"
-            placeholder="Enter stage city"
-            onChange={handleFareStageInputChange}
+            placeholder="Enter city"
+            value={addFareStage.info}
+            onChange={handleAddFareStageInputChange}
             />
             <div className="flex flex-row text-center m-6">
             <button 
               type="button" 
               className="mt-3 h-10 px-4 py-2 m-1 text-white transition-colors duration-300 transform bg-[#FF9119]/80 rounded-md border border-orange-400 hover:text-white hover:border-yellow-500 focus:outline-none"
-              onClick={handleCreateFareStageInfo}
+              onClick={addFareStages}
               >
                 {/*<i className="fi fi-rs-user-add mr-6"></i>*/}
                 Add Fare Stage
