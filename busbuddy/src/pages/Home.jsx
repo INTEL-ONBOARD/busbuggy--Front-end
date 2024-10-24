@@ -42,7 +42,7 @@ function Home() {
                 </p>
               </div>
 
-              <div className="z-40">
+              <div className="z-30">
                 <div className="flex justify-center items-center -mr-12">
                   <img className="w-auto size-full -mt-32" src={phone} alt="Emb Logo" />
                 </div>
